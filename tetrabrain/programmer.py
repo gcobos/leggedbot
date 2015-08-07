@@ -1,1 +1,1 @@
-/home/drone/Arduino/leggedbot/controller/programmer.py
+../controller/programmer.py
