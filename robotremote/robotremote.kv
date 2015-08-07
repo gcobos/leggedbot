@@ -1,0 +1,156 @@
+#:kivy 1.0
+#:import kivy kivy
+
+<RobotRemote>:
+    canvas:
+        Color:
+            rgb: 1, 1, 16
+        Rectangle:
+            #source: 'data/images/background.png'
+            size: self.size
+
+    BoxLayout:
+        orientation: 'vertical'
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Button:
+                id: button_up_left
+                #text: 'NW'
+                background_normal: 'atlas://data/icons/interfaz/arrow-return-left'
+                on_press: root.do_action(1)
+                on_release: root.do_release()
+
+            Button:
+                id: button_up
+                background_normal: 'atlas://data/icons/interfaz/arrow-up-a'
+                #text: 'N'
+                on_press: root.do_action(2)
+                on_release: root.do_release()
+
+            Button:
+                id: button_up_right
+                background_normal: 'atlas://data/icons/interfaz/arrow-return-right'
+                #text: 'NE'
+                on_press: root.do_action(3)
+                on_release: root.do_release()
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Button:
+                id: button_left
+                background_normal: 'atlas://data/icons/interfaz/arrow-left-a'
+                #text: 'W'
+                on_press: root.do_action(4)
+                on_release: root.do_release()
+
+            Button:
+                id: button_center
+                text: 'Stop'
+                on_press: root.do_action(5)
+                on_release: root.do_release()
+
+            Button:
+                id: button_right
+                background_normal: 'atlas://data/icons/interfaz/arrow-right-a'
+                #text: 'E'
+                on_press: root.do_action(6)
+                on_release: root.do_release()
+
+        BoxLayout:
+            orientation: 'horizontal'
+
+            Button:
+                id: button_down_left
+                background_normal: 'atlas://data/icons/interfaz/ios7-undo'
+                #text: 'SW'
+                on_press: root.do_action(7)
+                on_release: root.do_release()
+
+            Button:
+                id: button_down
+                background_normal: 'atlas://data/icons/interfaz/arrow-down-a'
+                #text: 'S'
+                on_press: root.do_action(8)
+                on_release: root.do_release()
+
+            Button:
+                id: button_down_right
+                background_normal: 'atlas://data/icons/interfaz/ios7-redo'
+                #text: 'SE'
+                on_press: root.do_action(9)
+                on_release: root.do_release()
+
+        BoxLayout:
+            orientation: 'horizontal'            
+
+            Button:
+                id: send_0
+                text: '0'
+                on_press: root.send_single(self.text)
+
+            Button:
+                id: send_1
+                text: '1'
+                on_press: root.send_single(self.text)
+
+            Button:
+                id: send_2
+                text: '2'
+                on_press: root.send_single(self.text)
+
+            Button:
+                id: send_3
+                text: '3'
+                on_press: root.send_single(self.text)
+
+            Button:
+                id: send_4
+                text: '4'
+                on_press: root.send_single(self.text)
+
+            Button:
+                id: send_5
+                text: '5'
+                on_press: root.send_single(self.text)
+
+            Button:
+                id: send_64
+                text: '64'
+                on_press: root.send_single(self.text)
+
+            Button:
+                id: send_128
+                text: '128'
+                on_press: root.send_single(self.text)
+
+            Button:
+                id: send_192
+                text: '192'
+                on_press: root.send_single(self.text)
+
+            Button:
+                id: send_254
+                text: '254'
+                on_press: root.send_single(self.text)
+
+            Button:
+                id: send_255
+                text: '255'
+                on_press: root.send_single(self.text)
+
+        BoxLayout:
+            orientation: 'horizontal'            
+
+            Button:
+                id: button_connect
+                text: 'Press to connect'
+                on_release: root.do_connect(self)
+
+            Button:
+                id: button_upload
+                text: 'Upload programs'
+                on_release: root.do_upload(self)
+        
