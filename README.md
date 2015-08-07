@@ -1,4 +1,4 @@
-tetrabot
+leggedbot
 ========
 
-Instructions, code and tests to build a 4-legged robot
+Instructions, code and tests to build a legged robot
