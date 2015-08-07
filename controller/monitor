@@ -1,0 +1,108 @@
+#!/usr/bin/python2.7
+
+import operator
+import time
+import string
+import serial
+import struct
+from gevent import Timeout
+
+import gevent
+from gevent import sleep, spawn, Timeout
+from gevent.queue import Queue
+
+from gevent import monkey
+monkey.patch_all()
+
+import sys
+import gobject
+
+try:
+    import gtk
+    import pygtk
+    pygtk.require("2.0")
+except:
+    pass
+
+from robot import Robot
+from random import randint
+
+def idle():
+    try:
+        sleep(0.01)
+    except:
+        gtk.main_quit()
+        gevent.hub.MAIN.throw(*sys.exc_info())
+    return True
+gobject.idle_add(idle)
+
+WAVE_AMP = 0.46
+WAVE_LEN = 1
+
+class InterfaceMonitor:
+    def __init__(self):
+        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.window.set_title("Monitor")
+        self.window.connect("destroy", self.destroy)        
+        self.window.show()
+        self.area = gtk.DrawingArea()
+        self.area.set_size_request(1024,700)
+        self.area.connect("expose-event", self.area_expose_cb)
+        self.area.show()
+        self.window.add(self.area)
+        self.x = 0.0
+        self.old_inputs = [0,0,0,0,0,0]
+        self.inputs = [0,0,0,0,0,0]
+        self.robot = Robot('tetra')
+        self.log = open('monitor.log', 'w')
+        self.running = True
+        self._get_info_thread = spawn(self._get_info_loop)
+        
+        sleep(0) # yields
+        
+
+    def area_expose_cb(self, area, event):
+        INITIAL=0*WAVE_AMP
+        SEPARATION=256*WAVE_AMP
+        #drawable = area.get_window()
+        self.gc = area.get_style().fg_gc[gtk.STATE_NORMAL]
+        
+        for i in range(len(self.inputs)):
+            self.gc.line_width=1
+            area.window.draw_line(self.gc, 0, int(INITIAL+i*SEPARATION), \
+                self.window.get_size()[0]-1, int(INITIAL+i*SEPARATION))
+            self.gc.line_width=2
+            area.window.draw_line(self.gc, int(self.x), int(INITIAL+i*SEPARATION+self.old_inputs[i]*WAVE_AMP), \
+                int(self.x+WAVE_LEN), int(INITIAL+i*SEPARATION+self.inputs[i]*WAVE_AMP))
+        return gtk.TRUE
+
+    def read_sensors (self):
+        sleep(0.0001)
+        return self.robot.get_sensors()
+        #return [ randint(0,255) for i in range(6) ]
+
+    def _get_info_loop (self):
+        while self.running:
+            self.old_inputs = self.inputs
+            self.inputs = [self.read_sensors()[0],128,128,128,128,128]
+            self.x = self.x + WAVE_LEN
+            if self.x >= self.window.get_size()[0]:
+                self.area.queue_draw()
+                self.x = 0.0
+            else:
+                self.area_expose_cb(self.area, None)
+
+    def destroy (self, widget):
+        self.running = False
+        self._get_info_thread.join()
+        gtk.main_quit()
+        
+def main():
+    gtk.mainloop()
+    return 0
+
+if __name__ == "__main__":
+    InterfaceMonitor()
+    main()
+
+

@@ -1,0 +1,50 @@
+
+* 255 will be a prefix for "meta" commands. So:
+  255 + 255 is upload
+  255 + 0 is read actuators: Returns the posisiton of all the actuators
+  255 + 1 is read sensors: Returns the values for all 4 analogic inputs to the controller
+
+* Preserve comments in programs
+
+* Library to use the robot in python code
+
+* Move _send_commands_loop to the robot library
+
+* Adapt controller to use the robot library
+
+* Sleep mode: meta-command to put all the actuators to sleep (position 0) (not needed!)
+
+* Get more precision for servos when channels are disabled
+
+* Get channels_in_use into Robot, so the pack_command knows what to do
+
+* Read sensors command
+
+* Read positions command
+
+* Módulo de autoprogramación (versión 1):
+    * Por cada canal, un selector de tipo de pulso (de -1 a 1), y un offset de -1 a 1
+    * Cada pulso está definido como una lista de puntos, en los que la 'x' es el tiempo, y la 'y' es el valor
+    * 
+    
+* Módulo de autoprogramación (versión 2): 
+    * En la clase "Program", hacer un método para dar una lista de puntos (x,y) por cada canal, los normalize, ordene, y genere
+    un programa, que se puede cargar al robot directamente. Sólo se necesita la lista de puntos por cada canal activo.
+    En cada canal activo, la coordenada "x" de cada punto representa el tiempo, y la "y" representa el valor a tomar. Los valores
+    pueden estar normalizados o no. Se normalizan automáticamente, dejando al menos un separador de tiempo entre cada uno, para
+    dar tiempo al actuador a moverse. Todo lo demás depende del valor de ticks por paso. El programa se genera a partir de la
+    interpolación de los valores dados, y su posterior conversión a comandos para los actuadores.
+    
+- Hacer que la clase "Robot" pueda ejecutar un programa del robot, directamente en un entorno ODE, ROS, Blender, V-REP, etc...
+  enviando los comandos para cada actuador, en tiempo real (convirtiendo los valores de velocidad/fuerza, los rangos, y valores
+  a los requeridos por el otro entorno)
+
+- Contemplar la posibilidad de que el robot pueda crear entornos de entrenamiento, basados en la observación, para luego usar los
+  resultados. Por ejemplo, generando un entorno XODE, con obstáculos, y entrenar usando los programas conocidos por el robot.
+  
+* Remote controller, so I can send commands by pressing a button which connects to actions
+
+* Headers to choose between servo/pure pwm
+
+- Possibility to use pure PWM instead of servos
+

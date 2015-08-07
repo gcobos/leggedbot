@@ -1,0 +1,8 @@
+(Ojo, algunas veces, hay que separar los comandos en distintas lineas para que funcione)
+
+AT+PIN1234AT+BAUD7
+# miniterm.py -b 9600 -e -D -p /dev/ttyUSB0 
+--- Miniterm on /dev/ttyUSB0: 9600,8,N,1 ---
+--- Quit: Ctrl+]  |  Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---
+ATOKAT+PIN1234OKsetPINAT+BAUD7OK57600
+--- exit ---

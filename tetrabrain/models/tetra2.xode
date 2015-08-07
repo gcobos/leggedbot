@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xode version="1.0r23" name="models/tetra2"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://tanksoftware.com/xode/1.0r23/xode.xsd">
+
+<world>
+	<space>
+		<body name="body">
+			<transform>
+				<position y="1.1" x="0" z="0"/>
+			</transform>
+			<mass>
+				<mass_shape density="2.0">
+					<box sizex="2.0" sizez="12.0" sizey="2.5"/>
+				</mass_shape>
+			</mass>
+			<geom>
+				<box sizex="2.0" sizez="12.0" sizey="2.5"/>
+			</geom>
+		</body>
+		<body name="frontAxis">
+			<transform>
+				<position y="-0.3" x="0.0" z="-3.5"/>
+			</transform>
+			<mass>
+				<mass_shape density="1.0">
+					<box sizex="10.0" sizez="1.0" sizey="0.3"/>
+				</mass_shape>
+			</mass>
+			<geom>
+				<box sizex="10.0" sizez="1.0" sizey="0.3"/>
+			</geom>
+		</body>
+		<joint name="body_front_axis">
+			<link1 body="body"/>
+			<link2 body="frontAxis"/>
+			<hinge>
+				<axis LowStop="-0.55" y="1" x="0" z="0" HiStop="0.55"/>
+				<anchor y="0.0" x="0.0" z="-3.5"/>
+			</hinge>
+		</joint>
+		<body name="frontLLeg">
+			<transform>
+				<position y="-1.5" x="-5" z="-3.5"/>
+				<rotation>
+					<euler y="0" x="90" aformat="degrees" z="0"/>
+				</rotation>
+			</transform>
+			<mass>
+				<mass_shape density="0.5">
+					<cappedCylinder length="3.2" radius="0.2"/>
+				</mass_shape>
+			</mass>
+			<geom>
+				<cappedCylinder length="3.2" radius="0.2"/>
+			</geom>
+		</body>
+		<body name="frontRLeg">
+			<transform>
+				<position y="-1.5" x="5" z="-3.5"/>
+				<rotation>
+					<euler y="0" x="90" aformat="degrees" z="0"/>
+				</rotation>
+			</transform>
+			<mass>
+				<mass_shape density="0.5">
+					<cappedCylinder length="3.2" radius="0.2"/>
+				</mass_shape>
+			</mass>
+			<geom>
+				<cappedCylinder length="3.2" radius="0.2"/>
+			</geom>
+		</body>
+		<joint name="axis_frontLLeg">
+			<link1 body="frontAxis"/>
+			<link2 body="frontLLeg"/>
+			<hinge>
+				<axis LowStop="0.0" y="0" x="0" z="1" HiStop="0.7"/>
+				<anchor y="-0.3" x="-5.0" z="-3.5" absolute="true"/>
+			</hinge>
+		</joint>
+		<joint name="axis_frontRLeg">
+			<link1 body="frontAxis"/>
+			<link2 body="frontRLeg"/>
+			<hinge>
+				<axis LowStop="-0.7" y="0" x="0" z="1" HiStop="0.0"/>
+				<anchor y="-0.3" x="5.0" z="-3.5" absolute="true"/>
+			</hinge>
+		</joint>
+		<body name="rearAxis">
+			<transform>
+				<position y="-0.3" x="0.0" z="3.5"/>
+			</transform>
+			<mass>
+				<mass_shape density="1.0">
+					<box sizex="10.0" sizez="1.0" sizey="0.3"/>
+				</mass_shape>
+			</mass>
+			<geom>
+				<box sizex="10.0" sizez="1.0" sizey="0.3"/>
+			</geom>
+		</body>
+		<joint name="body_rear_axis">
+			<link1 body="body"/>
+			<link2 body="rearAxis"/>
+			<hinge>
+				<axis LowStop="-0.55" y="1" x="0" z="0" HiStop="0.55"/>
+				<anchor y="0.0" x="0.0" z="3.5" absolute="true"/>
+			</hinge>
+		</joint>
+		<body name="rearLLeg">
+			<transform>
+				<position y="-1.5" x="-5" z="3.5"/>
+				<rotation>
+					<euler y="0" x="90" aformat="degrees" z="0"/>
+				</rotation>
+			</transform>
+			<mass>
+				<mass_shape density="0.5">
+					<cappedCylinder length="3.2" radius="0.2"/>
+				</mass_shape>
+			</mass>
+			<geom>
+				<cappedCylinder length="3.2" radius="0.2"/>
+			</geom>
+		</body>
+		<body name="rearRLeg">
+			<transform>
+				<position y="-1.5" x="5" z="3.5"/>
+				<rotation>
+					<euler y="0" x="90" aformat="degrees" z="0"/>
+				</rotation>
+			</transform>
+			<mass>
+				<mass_shape density="0.5">
+					<cappedCylinder length="3.2" radius="0.2"/>
+				</mass_shape>
+			</mass>
+			<geom>
+				<cappedCylinder length="3.2" radius="0.2"/>
+			</geom>
+		</body>
+		<joint name="axis_rearLLeg">
+			<link1 body="rearAxis"/>
+			<link2 body="rearLLeg"/>
+			<hinge>
+				<axis LowStop="0.0" y="0" x="0" z="1" HiStop="0.7"/>
+				<anchor y="-0.3" x="-5.0" z="3.5" absolute="true"/>
+			</hinge>
+		</joint>
+		<joint name="axis_rearRLeg">
+			<link1 body="rearAxis"/>
+			<link2 body="rearRLeg"/>
+			<hinge>
+				<axis LowStop="-0.7" y="0" x="0" z="1" HiStop="0.0"/>
+				<anchor y="-0.3" x="5.0" z="3.5" absolute="true"/>
+			</hinge>
+		</joint>
+
+		<geom name="floor">
+			<plane a="0" c="0" b="1" d="-5"/>
+		</geom>
+	</space>
+</world>
+</xode>
+<!--odeenvironment parameters
+<passpairs>
+('frontRLeg', 'rearRLeg', 'body', 'frontAxis', 'rearAxis', 'frontLLeg', 'rearLLeg')
+<centerOn>
+body
+<colors>
+('body', (0.15, 0.15, 0.15, 1.0))
+<end>
+-->

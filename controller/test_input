@@ -1,0 +1,38 @@
+#!/usr/bin/python
+
+from robot import Robot
+from gevent import sleep, spawn
+
+import time
+import numpy as np
+import matplotlib.pyplot as plt
+
+fig=plt.figure()
+#plt.axis([0,100,0,255])
+#plt.autoscale(False)
+
+#plt.ioff()
+
+tetra = Robot('tetra')
+#tetra.set_position(0, 1, 0, 0, 0, 240); sleep(2)
+#tetra.set_position (0, 1, 0, 0, 0, 16); sleep(2)
+
+markers = ['x','o','.',',','+','*']
+
+sleep(0)
+fig.show()
+
+def update ():
+    num=0
+    while running:
+        #print tetra.get_sensors()
+        for i, y in enumerate(tetra.get_sensors()):
+            plt.scatter(num, y, marker=markers[i])
+        fig.canvas.draw()
+        sleep(0.01)
+        num+=1
+
+running = True
+spawn(update)
+while True:
+    sleep(1)
