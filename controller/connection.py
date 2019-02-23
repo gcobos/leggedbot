@@ -7,7 +7,7 @@ USE_PYSERIAL = 1
 USE_PYBLUEZ = 2
 USE_ANDROID = 3
 
-class Connection:
+class Connection(object):
 
     DEFAULT_PORTS = ["/dev/rfcomm1", "/dev/rfcomm0", "/dev/ttyUSB0", "/dev/ttyUSB1", "/dev/ttyUSB2"]
     BAUD_RATE = 57600

@@ -3,7 +3,7 @@ import re
 from struct import pack, unpack
 from programmer import Programmer
 
-class RobotProgram:
+class RobotProgram(object):
     """        
         - A program is a secuence of commands that is sent in blocks called frames. Every frame represents an
         amount of time.

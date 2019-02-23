@@ -1,6 +1,8 @@
-#!/usr/bin/python
+#!/usr/bin/env python
 
 import re
+from math import fabs
+from pprint import pprint
 import unittest
 import numpy as np
 from scipy import dot
@@ -34,7 +36,7 @@ def save_signal_types (config = 'signal_types'):
         f.write(yaml.safe_dump(_signal_types_table, default_flow_style=False, canonical=False))
 
 
-class Signal:
+class Signal(object):
     """
         Holds a signal given its type and offset, or data as a list containing tuples of (time, value)
         Also keeps a general table with all the signal types, so if they can be created and modified
@@ -57,7 +59,8 @@ class Signal:
                 self.data = data
             elif len(data):
                 if len(data) == 2:
-                    self.data = self._expand(data[0], data[1])
+                    self.data = self._expand(data[0])
+                    self._set_offset(data[1])
                 else:
                     raise ValueError
             else:
@@ -120,7 +123,7 @@ class Signal:
 
 class Programmer (Module, ParameterContainer):
     """
-        Given a seed (a list of tuples containing) tuples of (type_of_signal, offset)
+        Given a seed (a list of tuples) containing tuples of (type_of_signal, offset)
         generates program code.
     """
     def __init__ (self, indim = 27, outdim = 6, seed = None, channels_setup = None, steps = None, types_subset = None):
@@ -186,7 +189,7 @@ class Programmer (Module, ParameterContainer):
     def get_raw_code (self):
         data = self.get_raw_data()
         previous_commands = []
-        max_slope = 0
+        max_slope = 0.0
         for step, commands in enumerate(zip(*data)):
             if previous_commands:
                 for p, c in zip(previous_commands, commands):
@@ -196,7 +199,7 @@ class Programmer (Module, ParameterContainer):
                         p = c
                     elif c is None:
                         c = p
-                    slope = abs(p-c)
+                    slope = fabs(p-c)
                     if slope > max_slope:
                         max_slope = slope
             previous_commands = copy(commands)
@@ -243,15 +246,12 @@ class Programmer (Module, ParameterContainer):
         """
             Just change the offsets a bit
         """
-        #print "Program mutated!!!!"
         for i in range(len(self._seed)):
             self._seed[i][1] += (random() * 0.1)-0.05
             self._seed[i][1] %= 1.0
         
 
     def copy(self):
-        print "Program copied!!!!"
-
         return Programmer(
             seed = self._seed, 
             channels_setup = self._channels_setup,
@@ -260,7 +260,6 @@ class Programmer (Module, ParameterContainer):
         )
 
     def randomize(self):   
-        #print "Program randomized!!!!"
         self.generate_seed()
 
     def __repr__(self):
@@ -269,6 +268,7 @@ class Programmer (Module, ParameterContainer):
 
 class TestProgrammer (unittest.TestCase):
 
+    #@unittest.skip('')
     def _test_interpolation (self):
         import matplotlib.pyplot as plt
         # Sine
@@ -282,7 +282,8 @@ class TestProgrammer (unittest.TestCase):
         plt.title('Signal interpolation')
         plt.show()
 
-    def _test_remap (self):
+    #@unittest.skip('')
+    def test_remap (self):
         import matplotlib.pyplot as plt
         # Sine
         dots = 30
@@ -296,6 +297,7 @@ class TestProgrammer (unittest.TestCase):
         plt.title('Signal remapping')
         plt.show()
 
+    #@unittest.skip('')
     def test_signal_generation (self):
         import matplotlib.pyplot as plt
 
@@ -347,7 +349,18 @@ class TestProgrammer (unittest.TestCase):
         s3.save_type(4)
         plt.show()
 
-    def _test_signal_offset (self):
+    #@unittest.skip('')
+    def test_loaded_signals (self):
+        global _signal_types_table
+        import matplotlib.pyplot as plt
+
+        plt.title('Check current loaded signals')
+        for i in _signal_types_table:
+          plt.plot(*zip(*i))
+        plt.show()
+
+    #@unittest.skip(None)
+    def test_signal_offset (self):
         import matplotlib.pyplot as plt
         from time import sleep
 
@@ -368,16 +381,19 @@ class TestProgrammer (unittest.TestCase):
             sleep(0.1)
             plt.clf()
 
-    def _test_generate_seed (self):
+    #@unittest.skip(None)
+    def test_generate_seed (self):
         
         channels_setup = [(1 if i!=2 else 0,1, (0,255), 0) for i in range(5)]
         i = 0
-        while i < 5:
-            ap = Programmer(steps = 5, channels_setup = channels_setup, types_subset = [1, 2])
-            print ap.get_raw_code()
+        while i < 2:
+            ap = Programmer(steps = 4, channels_setup = channels_setup, types_subset = [1, 2])
+            pprint(ap._seed)
+            pprint(ap.get_raw_code()); print('')
             i+=1
 
-    def _test_parse_seed (self):
+    #@unittest.skip(None)
+    def test_parse_seed (self):
         
         channels_setup = [(1 if i!=2 else 0,1, (0,255), 0) for i in range(5)]
         ap = Programmer(steps = 5, channels_setup = channels_setup, types_subset = [1, 2])
@@ -386,14 +402,15 @@ class TestProgrammer (unittest.TestCase):
         ap.parse_seed(to_parse)
         print "Parsed", ap
 
-    def _test_generate_code (self):
+    #@unittest.skip(None)
+    def test_generate_code (self):
 
         channels_setup = [(1 if i!=2 else 0,1, (0,255), 0) for i in range(4)]
         ap = Programmer(steps = 30, channels_setup = channels_setup, types_subset = [1])
         to_parse = "--SEED: 1:0.0, 1:0.5, 1:1.0--"
-        print "From seed", to_parse
+        print("From seed", to_parse)
         ap.parse_seed(to_parse)
-        print "data", [int(i) for i in ap.get_raw_data()[0]]
+        #print("data", [int(i + 0.5) for i in ap.get_raw_data()[0]])
         while True:
             code = ap.get_raw_code()
             if code or seed:

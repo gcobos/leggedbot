@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/env python
 
 from gevent import monkey
 monkey.patch_all()
@@ -12,7 +12,7 @@ import cv2
 import numpy as np
 from processor import Processor, CONFIG_DEFAULT_THRESHOLD, CONFIG_DEFAULT_MINAREA
 
-class Tracker:
+class Tracker(object):
 
     def __init__ (self, max_length = 60, training = True):
         self.training = training

@@ -1,7 +1,6 @@
 
 import sys
 import serial
-import bluetooth
 import struct
 from gevent import sleep, spawn, Timeout
 import copy
@@ -12,7 +11,7 @@ from program import RobotProgram
    Robot interface
 """
 
-class Robot:
+class Robot(object):
 
     DEFAULT_PORTS = ["/dev/rfcomm1", "/dev/rfcomm0", "/dev/ttyUSB0", "/dev/ttyUSB1", "/dev/ttyUSB2"]
     BAUD_RATE = 57600

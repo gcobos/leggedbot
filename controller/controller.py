@@ -20,7 +20,8 @@ except:
 try:
     import gtk
     import gtk.glade
-except:
+except Exception as e:
+    print("Error", e)
     sys.exit(1)
 
 def idle():

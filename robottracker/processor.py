@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/env python
 
 import sys, glob
 import cv2
@@ -39,7 +39,7 @@ def quantize (image, num, score_tone = 100, score_hist = 1000, score_diff = 100)
     score_diff *= image.size
     
     pixels = image.data
-    class _Cls:
+    class _Cls(object):
         color=0
         hist=0
         score=0
@@ -210,7 +210,7 @@ def reduceColors (img, colors = 4, iterations = 8):
     return res2
 
 
-class Processor:
+class Processor(object):
 
     def __init__ (self, source = 0, training = False):
 

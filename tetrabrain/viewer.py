@@ -1,4 +1,4 @@
-#!/usr/bin/python2.7
+#!/usr/bin/env python
 
 __author__ = 'Martin Felder, felder@in.tum.de'
 
