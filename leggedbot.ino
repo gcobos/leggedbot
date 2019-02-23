@@ -3,13 +3,13 @@
 //#define DEBUG_PULSE 1
 
 #define MEM_FOR_PROGRAMS  1100
-#define TOTAL_CHANNELS    12
+#define TOTAL_CHANNELS    12    // Max is 12
 #ifndef DEBUG_PULSE
   #define PERIOD_IN_USECS   20000
-  #define MIN_PULSE_WIDTH   700
-  #define MAX_PULSE_WIDTH   2300
+  #define MIN_PULSE_WIDTH   600
+  #define MAX_PULSE_WIDTH   2400
 #else
-  #define PERIOD_IN_USECS   20000
+  #define PERIOD_IN_USECS   50000
   #define MIN_PULSE_WIDTH   5000
   #define MAX_PULSE_WIDTH   15000
 #endif
@@ -25,13 +25,12 @@ volatile unsigned int step_tick = 0;
 volatile unsigned int activity[TOTAL_CHANNELS];
 int delta[TOTAL_CHANNELS] = {0};                // Keeps delta to add to current_pos until it reaches desired_pos (speed)
 unsigned int desired_pos[TOTAL_CHANNELS];       // Keeps the desired position for every actuator
-unsigned int min_range[TOTAL_CHANNELS] = {156,  64, 186,  68, 160, 160, 160, 160, 160, 160, 160, 160};       // Keeps the min range for every channel
-unsigned int max_range[TOTAL_CHANNELS] = {192, 218, 222, 220, 196, 196, 196, 196, 196, 196, 196, 196};     // Keeps the max range for every channel
-unsigned int inverted_channels = 11;            // Each bit keeps if channel must be inverted (bit 0 being channel 0, ...)
+unsigned int min_range[TOTAL_CHANNELS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};       // Keeps the min range for every channel
+unsigned int max_range[TOTAL_CHANNELS] = {255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255};     // Keeps the max range for every channel
+unsigned int inverted_channels = 0;             // Each bit keeps if channel must be inverted (bit 0 being channel 0, ...)
 volatile int current_pos[TOTAL_CHANNELS];       // Keeps the current value for every actuator
 volatile int order[TOTAL_CHANNELS];             // Keeps the order of every channel
 volatile long elapsed;                          // Keeps the time lapsed in a pulse
-
 
 /// --------------------------------------
 /// Control for program execution
@@ -193,7 +192,7 @@ void setPositionIsr()
   if (step_tick>0 && !uploading && total_programs>0) {
     step_tick--;
   }
-  
+
   total_active = 0;
   for (i=0; i<total_outputs; i++) {
     if (activity[i]) {
@@ -205,7 +204,7 @@ void setPositionIsr()
     }
   }
   if (!total_active) return;             // Nothing to do here
-  
+
   // Update every active channel towards their desired positions and adjusts deltas
   for (x=0;x<total_active; x++) {
     i = order[x];
@@ -226,7 +225,7 @@ void setPositionIsr()
       current_pos[i] = z;
     }
   }
-  
+
   // Order channels by their current_pos
   for (x = 0; x < total_active - 1; x++) {
     for (y = x + 1; y < total_active; y++) {
@@ -243,7 +242,7 @@ void setPositionIsr()
   y = 0;  // PortB
   for (z = 0; z < total_active; z++) {
     i = order[z];
-    if (i < 8) {
+    if (i < 6) {
       x |= 1 << (i+2);
     } else {
       y |= 1 << (i-6);
@@ -262,7 +261,7 @@ void setPositionIsr()
       delayMicroseconds(y - elapsed);
       elapsed = y + 8;
     }
-    if (i < 8) {
+    if (i < 6) {
       PORTD &= ~(1 << (i+2));             // corresponds to PORTD
     } else {
       PORTB &= ~(1 << (i-6));             // corresponds to PORTB
@@ -292,8 +291,8 @@ void setup()
 /// --------------------------------------
 /// Main loop. Just waiting for commands
 /// --------------------------------------
+
 void loop() {
-  
   unsigned int cmd = 0;        // Keeps latest command received
   unsigned int pos = 0;        // Keeps latest position received
 
@@ -304,6 +303,7 @@ void loop() {
     // read the incoming byte:
     cmd = Serial.read();
     pos = Serial.read();
+        
     // Process it
     processCommand(cmd, pos);
   } else if (total_programs && program_offset && !step_tick) {
