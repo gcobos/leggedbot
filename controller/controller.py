@@ -11,7 +11,15 @@ monkey.patch_all()
 
 import gi
 gi.require_version("Gtk", "3.0")
-from gi.repository import Gtk
+from gi.repository import Gtk, GLib
+
+def idle():
+    try:
+        sleep(0.01)
+    except:
+        Gtk.main_quit()
+    return True
+GLib.idle_add(idle)
 
 class TetrapodGTK (object):
     """Tetrapod controller"""

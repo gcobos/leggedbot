@@ -218,7 +218,7 @@ class Robot(object):
                     sleep(0.01)
 
             sleep(0.01)
-            
+    
     def _recv (self, length = None, timeout = 2.0):
         result = []
         try:
@@ -229,12 +229,12 @@ class Robot(object):
                 if length is None:
                     while not self._conn.inWaiting(): sleep(0.01)
                     num = self._conn.inWaiting()-1
-                    length = ord(self._conn.read(1))
+                    length = self._conn.read(1)
                 i = 0
                 while num or i < length:
                     while not self._conn.inWaiting(): sleep(0.01)
                     num = self._conn.inWaiting()
-                    result.extend((ord(i) for i in self._conn.read(num)))
+                    result.extend((i for i in self._conn.read(num)))
                     i+=num
                     num=0
         except Timeout as e:
@@ -250,6 +250,7 @@ class Robot(object):
         retries = 1
         while True:
             try:
+                #print("Sending", data)
                 #print("Writing", len(data))
                 self._conn.write(data)
                 if flush:

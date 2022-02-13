@@ -71,7 +71,7 @@ class Connection(object):
                 if self._conn and self._conn.isOpen() and self._conn.inWaiting()>0: 
                     print("Received: ", end=' ')
                     while self._conn.inWaiting()>0: 
-                        print(ord(self._conn.read(1)), end=' ')
+                        print(self._conn.read(1), end=' ')
             except:          
                 sleep(0.1)
                 raise
