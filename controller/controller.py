@@ -111,8 +111,7 @@ class TetrapodGTK (object):
         if event and hasattr(event, 'y'):
             cursor_y = event.y
             over_text, text_iter, trailing = widget.get_iter_at_position(0, int(cursor_y + scrolled_y))
-            if over_text:
-                self.set_step(text_iter.get_line())
+            self.set_step(text_iter.get_line())
 
     def load_clicked (self, widget):
         #print("Load from file program #", self.program)
@@ -215,16 +214,19 @@ class TetrapodGTK (object):
 
     def step_changed (self, widget):
         step = int(widget.get_value())
-        #print("Step set to", step)
+        print("Step set to", step)
         self.set_step(step)
 
     def set_step (self, step):
         step_combo=self.wTree.get_object("step")
         step_combo.set_value(step)
         code=self.wTree.get_object("code")
+        #print("Code?", code)
+        #self.code.
         iter1 = self.code_buffer.get_iter_at_line(step)
-        self.code_buffer.place_cursor(iter1)
-        code.place_cursor_onscreen()
+        #print("LAlala", iter1)
+        #self.code_buffer.place_cursor(iter1)
+        #self.
         self.step = step
 
     def mode_changed (self, widget):
