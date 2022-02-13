@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import serial
 import struct
@@ -9,28 +9,9 @@ from robot import Robot
 from gevent import monkey
 monkey.patch_all()
 
-import sys
-import gobject
-
-try:
-    import pygtk
-    pygtk.require("2.0")
-except:
-    pass
-try:
-    import gtk
-    import gtk.glade
-except Exception as e:
-    print("Error", e)
-    sys.exit(1)
-
-def idle():
-    try:
-        sleep(0.01)
-    except:
-        gtk.main_quit()
-    return True
-gobject.idle_add(idle)
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
 class TetrapodGTK (object):
     """Tetrapod controller"""
@@ -39,8 +20,8 @@ class TetrapodGTK (object):
 
         #Set the Glade file
         self.gladefile = "controller.glade"
-        self.wTree = gtk.glade.XML(self.gladefile)
-
+        self.wTree = Gtk.Builder()
+        self.wTree.add_from_file(self.gladefile)
         self.mode = 0
         self.speed = 0
         self.step = 0
@@ -88,15 +69,16 @@ class TetrapodGTK (object):
         }
 
         # Get the Main Window, and connect the "destroy" event
-        self.window = self.wTree.get_widget("MainWindow")        
-        combo=self.wTree.get_widget("mode")
+        self.window = self.wTree.get_object("MainWindow")        
+        combo=self.wTree.get_object("mode")
         combo.set_active(0)
-        codeview=self.wTree.get_widget("code")
+        codeview=self.wTree.get_object("code")
         self.code_buffer = codeview.get_buffer()
 
-        self.wTree.signal_autoconnect(dic)        
+        #self.wTree.signal_autoconnect(dic)
+        self.wTree.connect_signals(dic)        
         if (self.window):   
-            self.window.connect("destroy", gtk.main_quit)
+            self.window.connect("destroy", Gtk.main_quit)
         self.window.show()
 
         # Load config
@@ -112,7 +94,7 @@ class TetrapodGTK (object):
     def destroy (self, widget):
         self.save_configuration()
         self.running = False
-        gtk.main_quit()
+        Gtk.main_quit()
 
     def program_value_changed (self, widget):
         self.program = int(widget.get_value())
@@ -120,24 +102,26 @@ class TetrapodGTK (object):
         self.set_step(0)
 
     def code_changed (self, widget = None, other = None):
-        self.robot.set_code(self.program, self.code_buffer.get_text(*self.code_buffer.get_bounds()))
+        self.robot.set_code(self.program, self.code_buffer.get_text(*self.code_buffer.get_bounds(), include_hidden_chars=True))
         self.refresh_code()
 
     def code_cursor_moved (self, widget, event=None):
-        window = self.wTree.get_widget("scrolledwindow1")
+        window = self.wTree.get_object("scrolledwindow1")
         scrolled_y = window.get_vadjustment().get_value()
         if event and hasattr(event, 'y'):
             cursor_y = event.y
-            self.set_step(widget.get_iter_at_location(0, int(cursor_y + scrolled_y)).get_line())
+            over_text, text_iter, trailing = widget.get_iter_at_position(0, int(cursor_y + scrolled_y))
+            if over_text:
+                self.set_step(text_iter.get_line())
 
     def load_clicked (self, widget):
-        #print "Load from file program #", self.program
+        #print("Load from file program #", self.program)
         self.robot.load(self.program)
         self.refresh_code()
         self.set_step(0)
 
     def save_clicked (self, widget):
-        #print "Save to file program #", self.program
+        #print("Save to file program #", self.program)
         self.robot.save(self.program)
 
     def upload_clicked (self, widget):
@@ -145,11 +129,11 @@ class TetrapodGTK (object):
         self.robot.upload_programs()
 
     def execute_clicked (self, widget):
-        #print "Execute code from program #", self.program
+        #print("Execute code from program #", self.program)
         self.robot.run(self.program)
 
     def stop_clicked (self, widget):
-        #print "Stop execution"
+        #print("Stop execution")
         self.robot.stop()
         
     def send_commands_toggled (self, widget):
@@ -159,7 +143,7 @@ class TetrapodGTK (object):
         self.chained_trunk_flag = widget.get_active()
         
     def clear_clicked (self, widget):
-        code=self.wTree.get_widget("code")
+        code=self.wTree.get_object("code")
         self.robot.set_code(self.program, "")
         self.code_buffer.set_text("")
 
@@ -168,61 +152,52 @@ class TetrapodGTK (object):
         self.set_step(self.step);
 
     def generate_program_clicked (self, widget):
-        seed=self.wTree.get_widget("program_seed").get_text()
-        total_steps=int(self.wTree.get_widget("total_steps").get_value())
-        signals=self.wTree.get_widget("signal_types")
-        #print signals.get_active() 
+        seed=self.wTree.get_object("program_seed").get_text()
+        total_steps=int(self.wTree.get_object("total_steps").get_value())
+        signals=self.wTree.get_object("signal_types")
+        #print(signals.get_active()) 
         self.robot.generate_code(self.program, steps = total_steps, seed = seed, types_subset = [1,2])
         self.refresh_code()
         self.set_step(0)
     
     def use_channel_toggled (self, widget):
-        channel_name = widget.get_name().replace("use_", "").upper()
-        #if widget.get_active():
-        #    print "Enable channel", channel_name
-        #else:
-        #    print "Disable channel", channel_name
+        channel_name = self._get_name(widget, prefix='use')
         self.robot.setup_channel(channel_name, active = widget.get_active())
         #self.robot.upload_programs()
 
     def pwm_servo_channel_toggled (self, widget):
-        channel_name = widget.get_name().replace("pwm_servo_", "").upper()
-        #if widget.get_active():
-        #    print "Channel", channel_name,"is a servo"
-        #else:
-        #    print "Channel", channel_name,"is a coil" 
-        # Upload code automatically
+        channel_name = self._get_name(widget, prefix='pwm_servo')
         self.robot.setup_channel(channel_name, is_servo = widget.get_active())
         #self.robot.upload_programs()
 
     def leg_value_changed (self, widget):
-        channel_name = widget.get_name().replace("channel_", "").upper()
+        channel_name = self._get_name(widget, prefix='channel')
         pos = int(widget.get_value())
         self.robot.set_position(self.program, self.step, channel_name, self.speed, self.mode, pos)
         self.refresh_code()
 
     def min_range_changed (self, widget):
-        channel_name = widget.get_name().replace("min_range_", "").upper()
+        channel_name = self._get_name(widget, prefix='min_range')
         self.robot.setup_channel(channel_name, min_range = int(widget.get_value()))
 
     def max_range_changed (self, widget):
-        channel_name = widget.get_name().replace("max_range_", "").upper()
+        channel_name = self._get_name(widget, prefix='max_range')
         self.robot.setup_channel(channel_name, max_range = int(widget.get_value()))
 
     def inverted_toggled (self, widget):
-        channel_name = widget.get_name().replace("inverted_", "").upper()
+        channel_name = self._get_name(widget, prefix='inverted')
         self.robot.setup_channel(channel_name, inverted = int(widget.get_active()))
         
     def trunk_value_changed (self, widget):
-        channel_name = widget.get_name().replace("channel_", "").upper()
+        channel_name = self._get_name(widget, prefix='channel')
         pos = int(widget.get_value())
         if self.chained_trunk_flag:
             if channel_name=="W":
                 other_channel="S"
-                other=self.wTree.get_widget("channel_s")
+                other=self.wTree.get_object("channel_s")
             elif channel_name=="S":
                 other_channel="W"
-                other=self.wTree.get_widget("channel_w")
+                other=self.wTree.get_object("channel_w")
             other_pos = 255 - pos
             other.set_value(other_pos)
         self.robot.set_position(self.program, self.step, channel_name, self.speed, self.mode, pos)
@@ -233,20 +208,20 @@ class TetrapodGTK (object):
             
     def speed_changed (self, widget):
         self.speed = int(widget.get_value())-1
-        #print "Speed set to", self.speed+1
+        #print("Speed set to", self.speed+1)
 
     def ticks_per_step_changed (self, widget):
         self.robot.ticks_per_step = int(widget.get_value())
 
     def step_changed (self, widget):
         step = int(widget.get_value())
-        #print "Step set to", step
+        #print("Step set to", step)
         self.set_step(step)
 
     def set_step (self, step):
-        step_combo=self.wTree.get_widget("step")
+        step_combo=self.wTree.get_object("step")
         step_combo.set_value(step)
-        code=self.wTree.get_widget("code")
+        code=self.wTree.get_object("code")
         iter1 = self.code_buffer.get_iter_at_line(step)
         self.code_buffer.place_cursor(iter1)
         code.place_cursor_onscreen()
@@ -254,7 +229,7 @@ class TetrapodGTK (object):
 
     def mode_changed (self, widget):
         self.mode = int(widget.get_active())
-        #print "Mode set to", self.mode + 1
+        #print("Mode set to", self.mode + 1)
 
     def load_config (self, suffix = ''):
         with open('%s%s.conf' % (prefix, suffix), 'r') as f:
@@ -263,25 +238,29 @@ class TetrapodGTK (object):
     def load_configuration (self):
         custom = self.robot.load_config()
         # Populate the widges with the config loaded
-        self.wTree.get_widget("ticks_per_step").set_value(self.robot.ticks_per_step)
-        self.wTree.get_widget("send_commands").set_active(self.robot.send_commands_flag)
+        self.wTree.get_object("ticks_per_step").set_value(self.robot.ticks_per_step)
+        self.wTree.get_object("send_commands").set_active(self.robot.send_commands_flag)
         for channel_index, setup in enumerate(self.robot.channels_setup):
             active, is_servo, ranges, inverted = setup
             channel = self.robot.CHANNELS[channel_index].lower()
-            self.wTree.get_widget("use_%s" % channel).set_active(active)
-            #self.wTree.get_widget("pwm_servo_%s" % channel).set_active(is_servo)
-            self.wTree.get_widget("min_range_%s" % channel).set_value(int(ranges[0]))
-            self.wTree.get_widget("max_range_%s" % channel).set_value(int(ranges[1]))
-            self.wTree.get_widget("inverted_%s" % channel).set_active(inverted)
+            self.wTree.get_object("use_%s" % channel).set_active(active)
+            #self.wTree.get_object("pwm_servo_%s" % channel).set_active(is_servo)
+            self.wTree.get_object("min_range_%s" % channel).set_value(int(ranges[0]))
+            self.wTree.get_object("max_range_%s" % channel).set_value(int(ranges[1]))
+            self.wTree.get_object("inverted_%s" % channel).set_active(inverted)
         
         # Custom variables
         self.chained_trunk_flag = custom.get('chained_trunk')
-        self.wTree.get_widget("chained_trunk").set_active(self.chained_trunk_flag if self.chained_trunk_flag is not None else True)
+        self.wTree.get_object("chained_trunk").set_active(self.chained_trunk_flag if self.chained_trunk_flag is not None else True)
         
     def save_configuration (self):
         self.robot.save_config(custom = {'chained_trunk': self.chained_trunk_flag})
-        
+
+
+    def _get_name(self, obj, prefix=''):
+        return Gtk.Buildable.get_name(obj).replace(prefix + "_", "").upper()
+
 if __name__ == "__main__":
     hwg = TetrapodGTK()
-    gtk.main()
+    Gtk.main()
 

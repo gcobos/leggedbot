@@ -37,12 +37,12 @@ class Robot(object):
         custom = {}
         try:
             with open('%s%s.conf' % (self.prefix, suffix), 'r') as f:
-                config = yaml.load(f)
+                config = yaml.load(f, Loader=yaml.FullLoader)
                 self.send_commands_flag = config['send_commands_flag']
                 self.ticks_per_step = config['ticks_per_step']
                 self.channels_setup = config['channels_setup']
                 custom = config.get('custom') or {}
-        except IOError, e:
+        except IOError as e:
             pass
         return custom
             
@@ -86,8 +86,8 @@ class Robot(object):
         """
         raw, length = self.program.get_all_raw_code(self.ticks_per_step, self.channels_setup)
         # Saves the raw programs in an accesible location
-        print "About to upload", length,"bytes..."
-        print raw
+        print("About to upload", length,"bytes...")
+        print(raw)
         with open('/home/drone/public_html/robot/programs.json', 'w') as f:
             f.write(str([255] + raw))
         
@@ -125,14 +125,14 @@ class Robot(object):
             ),
             inverted if inverted is not None else self.channels_setup[channel][3],
         )
-        #print "Channels setup", self.channels_setup
+        #print("Channels setup", self.channels_setup)
 
     def get_positions (self):
         self.channel_commands[len(Robot.CHANNELS)].append((Robot.META_COMMAND, 0))
         while self._positions == []:
             sleep(0.1)
         if self._sensors is None:
-            print "Error reading positions"
+            print("Error reading positions")
         return self._positions
 
     def get_sensors (self):
@@ -140,7 +140,7 @@ class Robot(object):
         while self._sensors == []:
             sleep(0.1)
         if self._sensors is None:
-            print "Error reading sensors"
+            print("Error reading sensors")
         return self._sensors
 
     def _connect (self):
@@ -182,7 +182,7 @@ class Robot(object):
                 if commands:
                     cmd, pos = commands[-1]
                     #if self.channel_commands[i][:-1]:
-                    #    print "Skipping ", self.channel_commands[i][:-1]
+                    #    print("Skipping ", self.channel_commands[i][:-1])
                     self.channel_commands[i] = []    # Deletes all pending commands from the channel
                     # Send commands optionally for legs and trunk, but allow control commands always
                     if self.send_commands_flag or i >= len(Robot.CHANNELS):
@@ -207,13 +207,13 @@ class Robot(object):
                                     self._sensors = self._recv()
                                 elif subcmd == 255:       # UPLOAD
                                     # Writes all the programs at once
-                                    #print "Writing programs into robot's memory"
-                                    #print pos
+                                    #print("Writing programs into robot's memory")
+                                    #print(pos)
                                     for i in pos:
                                         self._send(struct.pack('B', i))
                         else:
-                            #print "Send", cmd, pos
-                            #print "Channel",cmd & 15, "Speed", (cmd >> 4)
+                            #print("Send", cmd, pos)
+                            #print("Channel",cmd & 15, "Speed", (cmd >> 4))
                             self._send(struct.pack('B', cmd) + struct.pack('B', pos))
                     sleep(0.01)
 
@@ -222,7 +222,7 @@ class Robot(object):
     def _recv (self, length = None, timeout = 2.0):
         result = []
         try:
-            print "Receiving..."
+            print("Receiving...")
             with Timeout(timeout):
                 self.read_lock = True
                 # Get response if any
@@ -238,7 +238,7 @@ class Robot(object):
                     i+=num
                     num=0
         except Timeout as e:
-            print "Receiving timeout..."
+            print("Receiving timeout...")
             self._conn.flush()
             sleep(1)
             result = None
@@ -250,16 +250,16 @@ class Robot(object):
         retries = 1
         while True:
             try:
-                #print "Writing", len(data)
+                #print("Writing", len(data))
                 self._conn.write(data)
                 if flush:
                     self._conn.flush()
                 sleep(0.02)
                 break
             except (serial.SerialException, ValueError, IOError) as e:
-                print "Error?",e
+                print("Error?", e)
                 sleep(1)
-                #print "Reconnecting...", retries
+                #print("Reconnecting...", retries)
                 try:
                     if self._conn:
                         self._conn.close()

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from robot import Robot
 from gevent import sleep
@@ -14,21 +14,21 @@ for i in range(9):
 tetra.upload_programs()
 sleep(3)
 
-print "Searching for light..."
+print("Searching for light...")
 threshold = 2
 try:
     while True:
         eyes = tetra.get_sensors()
         sleep(0.3)
         diff = eyes[0] - eyes[1]*0.9
-        print diff
+        print(diff)
         #continue
         if diff > threshold:
-            print "Move right"
+            print("Move right")
             tetra.run(6)
             sleep(3)
         elif diff < -threshold:
-            print "Move left"
+            print("Move left")
             tetra.run(4)
             sleep(3)
         elif abs(diff) < threshold*0.3:
@@ -39,6 +39,6 @@ try:
             sleep(3)
         
 except:
-    print "Stopping..."
+    print("Stopping...")
     tetra.run(5)
     sleep(2)

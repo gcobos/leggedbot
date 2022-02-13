@@ -116,7 +116,7 @@ class PlotFigure(wx.Frame):
 
             Want to redraw the canvas.
         '''
-        #print "onTimer"
+        #print("onTimer")
         if len(self.dataqueue) > 0 :
             data = self.dataqueue.pop()
 
@@ -167,7 +167,7 @@ class ThreadSimulation(threading.Thread):
         datastep = self.datastep
         pltframe = self.pltframe
 
-        print 'Sim Thread: Starting.'
+        print('Sim Thread: Starting.')
         tstart = time.time()               # for profiling
 
         # Define Data to share between threads.
@@ -198,8 +198,8 @@ class ThreadSimulation(threading.Thread):
 
 
         tstop= time.time()
-        print 'Sim Thread: Complete.'
-        print 'Av Loop Time:' , (tstop-tstart)/ nsimloops
+        print('Sim Thread: Complete.')
+        print('Av Loop Time:' , (tstop-tstart)/ nsimloops)
 
 if __name__ == '__main__':
 

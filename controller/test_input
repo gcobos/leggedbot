@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/env python3
 
 from robot import Robot
 from gevent import sleep, spawn
@@ -25,7 +25,7 @@ fig.show()
 def update ():
     num=0
     while running:
-        #print tetra.get_sensors()
+        #print(tetra.get_sensors())
         for i, y in enumerate(tetra.get_sensors()):
             plt.scatter(num, y, marker=markers[i])
         fig.canvas.draw()

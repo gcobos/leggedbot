@@ -5,7 +5,7 @@ Instructions, code and tests to build a legged robot
 
 
 Abstract: 
-Construction of an legged robot controller, using arduino.
+Construction of a legged robot controller, using arduino.
 
 Interface:
 It uses up to 12 channels (pins 2-13), and pins 1 and 2 to control the movements using serial communication.

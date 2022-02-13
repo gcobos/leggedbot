@@ -1,4 +1,3 @@
-
 # This handles a serial connection with the robot
 
 
@@ -34,7 +33,7 @@ class Connection(object):
                 continue
 
         if self._conn:
-            print "Connected by ",device
+            print("Connected by ",device)
         self.channel_commands = [[] for i in range(len(Robot.CHANNELS)+1)]    # channels + one special for control & meta commands
 
         self.running = True
@@ -45,16 +44,16 @@ class Connection(object):
         retries = 1
         while True:
             try:
-                #print "Writing", len(data)
+                #print("Writing", len(data))
                 self._conn.write(data)
                 if flush:
                     self._conn.flush()
                 sleep(0.01)
                 break
             except (serial.SerialException, ValueError, IOError) as e:
-                print "Error?",e
+                print("Error?", e)
                 sleep(1)
-                #print "Reconnecting...", retries
+                #print("Reconnecting...", retries)
                 try:
                     if self._conn:
                         self._conn.close()
@@ -70,9 +69,9 @@ class Connection(object):
     def recv (self):
             try:
                 if self._conn and self._conn.isOpen() and self._conn.inWaiting()>0: 
-                    print "Received: ",
+                    print("Received: ", end=' ')
                     while self._conn.inWaiting()>0: 
-                        print ord(self._conn.read(1)),
+                        print(ord(self._conn.read(1)), end=' ')
             except:          
                 sleep(0.1)
                 raise

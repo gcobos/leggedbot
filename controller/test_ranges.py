@@ -1,18 +1,18 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from robot import Robot
 from gevent import sleep
 
 tetra = Robot('tetra')
 sleep(2)
-print "Positions", tetra.get_positions()
+print("Positions", tetra.get_positions())
 i = 0
 while i < 10:
     sleep(2)
     tetra.set_position(0, 1, 0, 0, 0, 128)
     i+=1
 sleep(2)
-print "Positions after", tetra.get_positions()
+print("Positions after", tetra.get_positions())
 sleep(2)
 
 """
@@ -25,26 +25,26 @@ for i in range(9):  # Load programs
 tetra.upload_programs()
 sleep(10)
 tetra.run(5)
-print "Move leg..."
+print("Move leg...")
 tetra.set_position(0, 1, 0, 0, 0, 240); sleep(2)
 tetra.set_position (0, 1, 0, 0, 0, 16); sleep(2)
-print "Test walking..."
+print("Test walking...")
 tetra.run(2); sleep(3)
-print "Standing position..."
+print("Standing position...")
 tetra.run(5); sleep(3)
-print "Turn right..."
+print("Turn right...")
 tetra.run(9); sleep(6)
-print "Stop"
+print("Stop")
 tetra.run(5); sleep(3)
-print "Walk backwards..."
+print("Walk backwards...")
 tetra.run(8); sleep(4)
-print "Turn right again..."
+print("Turn right again...")
 tetra.run(9); sleep(6)
-print "Standing position..."
+print("Standing position...")
 tetra.run(5); sleep(3)
-print "Walk again..."
+print("Walk again...")
 tetra.run(2); sleep(3)
-print "Standing position."
+print("Standing position.")
 tetra.run(5); sleep(3)
-print "The end."
+print("The end.")
 """

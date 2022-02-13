@@ -1,53 +1,43 @@
-#!/usr/bin/python2.7
+#!/usr/bin/env python3
 
 import operator
 import time
 import string
 import serial
 import struct
-from gevent import Timeout
-
 import gevent
 from gevent import sleep, spawn, Timeout
 from gevent.queue import Queue
+from robot import Robot
+from random import randint
+import sys
 
 from gevent import monkey
 monkey.patch_all()
 
-import sys
-import gobject
+import gi
+gi.require_version("Gtk", "3.0")
+from gi.repository import Gtk
 
-try:
-    import gtk
-    import pygtk
-    pygtk.require("2.0")
-except:
-    pass
-
-from robot import Robot
-from random import randint
-
-def idle():
-    try:
-        sleep(0.01)
-    except:
-        gtk.main_quit()
-        gevent.hub.MAIN.throw(*sys.exc_info())
-    return True
-gobject.idle_add(idle)
+#def idle():
+#    try:
+#        sleep(0.01)
+#    except:
+#        Gtk.main_quit()
+#    return True
 
 WAVE_AMP = 0.46
 WAVE_LEN = 1
 
 class InterfaceMonitor:
     def __init__(self):
-        self.window = gtk.Window(gtk.WINDOW_TOPLEVEL)
+        self.window = Gtk.Window()
         self.window.set_title("Monitor")
         self.window.connect("destroy", self.destroy)        
         self.window.show()
-        self.area = gtk.DrawingArea()
+        self.area = Gtk.DrawingArea()
         self.area.set_size_request(1024,700)
-        self.area.connect("expose-event", self.area_expose_cb)
+        self.area.connect("draw", self.area_expose_cb)
         self.area.show()
         self.window.add(self.area)
         self.x = 0.0
@@ -64,17 +54,19 @@ class InterfaceMonitor:
     def area_expose_cb(self, area, event):
         INITIAL=0*WAVE_AMP
         SEPARATION=256*WAVE_AMP
-        #drawable = area.get_window()
-        self.gc = area.get_style().fg_gc[gtk.STATE_NORMAL]
+        self.gc = area.get_property('window').cairo_create()
+        #self.gc = area.get_window()
+        #print(area.Style.fg.__dir__)
+        #self.gc = area.get_style().fg_gc[Gtk.STATE_NORMAL]
         
         for i in range(len(self.inputs)):
-            self.gc.line_width=1
-            area.window.draw_line(self.gc, 0, int(INITIAL+i*SEPARATION), \
-                self.window.get_size()[0]-1, int(INITIAL+i*SEPARATION))
-            self.gc.line_width=2
-            area.window.draw_line(self.gc, int(self.x), int(INITIAL+i*SEPARATION+self.old_inputs[i]*WAVE_AMP), \
-                int(self.x+WAVE_LEN), int(INITIAL+i*SEPARATION+self.inputs[i]*WAVE_AMP))
-        return gtk.TRUE
+            self.gc.set_line_width(1)
+            self.gc.move_to(0, int(INITIAL+i*SEPARATION))
+            self.gc.line_to(self.window.get_size()[0]-1, int(INITIAL+i*SEPARATION))
+            self.gc.set_line_width(2)
+            self.gc.move_to(int(self.x), int(INITIAL+i*SEPARATION+self.old_inputs[i]*WAVE_AMP))
+            self.gc.line_to(int(self.x+WAVE_LEN), int(INITIAL+i*SEPARATION+self.inputs[i]*WAVE_AMP))
+        return True
 
     def read_sensors (self):
         sleep(0.0001)
@@ -95,10 +87,10 @@ class InterfaceMonitor:
     def destroy (self, widget):
         self.running = False
         self._get_info_thread.join()
-        gtk.main_quit()
+        Gtk.main_quit()
         
 def main():
-    gtk.mainloop()
+    Gtk.main()
     return 0
 
 if __name__ == "__main__":

@@ -216,7 +216,7 @@ class RobotProgram(object):
         num_channels = len([True for v in channels_setup if v[0]])
         if num_channels < 1:
             raise ValueError("No active channels")
-        #print "Channels in use", channels_in_use
+        #print("Channels in use", channels_in_use)
         # TODO: Simplify this
         channels_in_use = [i for i, v in enumerate(channels_setup) if v[0]]
         channels_types = [v[1] for i, v in enumerate(channels_setup) if v[0]]
@@ -238,7 +238,7 @@ class RobotProgram(object):
         
         # Put first total length as 2-bytes (headers out, only offsets and code)
         body_length=(2*len(lengths))+len(programs_code)
-        raw_code.extend([ord(i) for i in tuple(pack('<h', body_length))])
+        raw_code.extend([i for i in tuple(pack('<h', body_length))])
 
         # Number of programs as 1-byte (part of the header)
         raw_code.append(len(lengths))
@@ -254,7 +254,7 @@ class RobotProgram(object):
         inverted_mask = 0
         for n, i in enumerate(channels_inverted):
             inverted_mask += int(i) << n
-        raw_code.extend([ord(i) for i in tuple(pack('<h', inverted_mask))])
+        raw_code.extend([i for i in tuple(pack('<h', inverted_mask))])
         
         header_length = len(raw_code)
         
@@ -262,7 +262,7 @@ class RobotProgram(object):
         # Then the list of offsets as a 2-bytes array
         offset = len(lengths)*2     # Offset of the first program
         for length in lengths:
-            raw_code.extend([ord(i) for i in tuple(pack('<h', offset))])
+            raw_code.extend([i for i in tuple(pack('<h', offset))])
             offset += length
         raw_code.extend(programs_code)
         return raw_code, body_length + header_length   # Including the length of the header here

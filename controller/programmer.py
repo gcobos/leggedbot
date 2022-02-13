@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import re
 from math import fabs
@@ -137,12 +137,12 @@ class Programmer (Module, ParameterContainer):
         if not self._seed:
             self.generate_seed()
 
-        #print "Init module ", self.get_num_channels()
+        #print("Init module ", self.get_num_channels())
         Module.__init__(self, indim, outdim, None)
         ParameterContainer.__init__(self, indim)
 
     def _forwardImplementation(self, inbuf, outbuf):
-        print "Forward implementation called in Programmer instance", outbuf
+        print("Forward implementation called in Programmer instance", outbuf)
         outbuf[:] = [random() for i in outbuf]
 
     def generate_seed (self, types_subset = None):
@@ -398,9 +398,9 @@ class TestProgrammer (unittest.TestCase):
         channels_setup = [(1 if i!=2 else 0,1, (0,255), 0) for i in range(5)]
         ap = Programmer(steps = 5, channels_setup = channels_setup, types_subset = [1, 2])
         to_parse = "--SEED: 3:0.536607, 2:0.554794, 2:0.287840, 1:0.213163--"
-        print "To be parsed", to_parse
+        print("To be parsed", to_parse)
         ap.parse_seed(to_parse)
-        print "Parsed", ap
+        print("Parsed", ap)
 
     #@unittest.skip(None)
     def test_generate_code (self):
@@ -416,7 +416,7 @@ class TestProgrammer (unittest.TestCase):
             if code or seed:
                 break
         for i, v in enumerate(code):
-            print "Step:", i, v
+            print("Step:", i, v)
         
 
 if __name__ == '__main__':
