@@ -123,7 +123,7 @@
   <object class="GtkAdjustment" id="adjustment4">
     <property name="upper">240</property>
     <property name="step_increment">1</property>
-    <property name="page_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment5">
     <property name="upper">100</property>
@@ -155,42 +155,42 @@
     <property name="upper">255</property>
     <property name="value">1</property>
     <property name="step_increment">1</property>
-    <property name="page_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_d_adj">
     <property name="lower">1</property>
     <property name="upper">255</property>
     <property name="value">1</property>
     <property name="step_increment">1</property>
-    <property name="page_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_e_adj">
     <property name="lower">1</property>
     <property name="upper">255</property>
     <property name="value">1</property>
     <property name="step_increment">1</property>
-    <property name="page_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_q_adj">
     <property name="lower">1</property>
     <property name="upper">255</property>
     <property name="value">1</property>
     <property name="step_increment">1</property>
-    <property name="page_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_s_adj">
     <property name="lower">1</property>
     <property name="upper">255</property>
     <property name="value">1</property>
     <property name="step_increment">1</property>
-    <property name="page_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_w_adj">
     <property name="lower">1</property>
     <property name="upper">255</property>
     <property name="value">1</property>
     <property name="step_increment">1</property>
-    <property name="page_increment">1</property>
+    <property name="page_increment">10</property>
   </object>
   <object class="GtkListStore" id="liststore1">
     <columns>

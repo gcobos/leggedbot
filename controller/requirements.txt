@@ -1,0 +1,5 @@
+scipy==1.2.3
+pyyaml
+gevent
+https://github.com/pybrain/pybrain/archive/refs/heads/master.zip
+pygobject
