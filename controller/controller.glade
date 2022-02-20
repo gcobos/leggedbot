@@ -192,6 +192,9 @@
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkTextBuffer" id="code_buffer">
+    <signal name="notify::cursor-position" handler="on_code_move_cursor" swapped="no"/>
+  </object>
   <object class="GtkListStore" id="liststore1">
     <columns>
       <!-- column-name value -->
@@ -250,10 +253,11 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="wrap_mode">word-char</property>
+                    <property name="buffer">code_buffer</property>
                     <property name="monospace">True</property>
-                    <signal name="button-press-event" handler="on_code_move_cursor" swapped="no"/>
+                    <!--<signal name="button-press-event" handler="on_code_move_cursor" swapped="no"/>-->
                     <signal name="focus-out-event" handler="on_code_changed" swapped="no"/>
-                    <signal name="key-press-event" handler="on_code_move_cursor" swapped="no"/>
+                    <!--<signal name="key-press-event" handler="on_code_move_cursor" swapped="no"/>-->
                   </object>
                 </child>
               </object>

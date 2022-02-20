@@ -96,6 +96,7 @@ class RobotController (object):
 		# Load the program
 		self.robot.load(self.program)
 		self.refresh_code()
+		self.set_step(0)
 
 		self.running = True
 		sleep(0) # yields
@@ -110,17 +111,16 @@ class RobotController (object):
 		self.refresh_code()
 		self.set_step(0)
 
+	def _get_code_text(self):
+		return self.code_buffer.get_text(*self.code_buffer.get_bounds(), include_hidden_chars = True)
+
 	def code_changed (self, widget = None, other = None):
-		self.robot.set_code(self.program, self.code_buffer.get_text(*self.code_buffer.get_bounds(), include_hidden_chars=True))
+		self.robot.set_code(self.program, self._get_code_text())
 		self.refresh_code()
 
 	def code_cursor_moved (self, widget, event=None):
-		window = self.wtree.get_object("scrolledwindow1")
-		scrolled_y = window.get_vadjustment().get_value()
-		if event and hasattr(event, 'y'):
-			cursor_y = event.y
-			over_text, text_iter, trailing = widget.get_iter_at_position(0, int(cursor_y + scrolled_y))
-			self.set_step(text_iter.get_line())
+		step = self._get_code_text()[0:self.code_buffer.props.cursor_position].count('\n')	
+		self.set_step(step)
 
 	def load_clicked (self, widget):
 		#print("Load from file program #", self.program)
@@ -223,20 +223,16 @@ class RobotController (object):
 
 	def step_changed (self, widget):
 		step = int(widget.get_value())
-		print("Step set to", step)
 		self.set_step(step)
 
 	def set_step (self, step):
 		step_combo=self.wtree.get_object("step")
 		step_combo.set_value(step)
 		code=self.wtree.get_object("code")
-		#print("Code?", code)
-		#self.code.
 		iter1 = self.code_buffer.get_iter_at_line(step)
-		#print("LAlala", iter1)
-		#self.code_buffer.place_cursor(iter1)
-		#self.
-		self.step = step
+		if step != self.step:
+			self.code_buffer.place_cursor(iter1)
+			self.step = step
 
 	def mode_changed (self, widget):
 		self.mode = int(widget.get_active())
