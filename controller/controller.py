@@ -156,8 +156,9 @@ class RobotController (object):
 		self.code_buffer.set_text("")
 
 	def refresh_code (self):
+		previous_step = self.step
 		self.code_buffer.set_text(self.robot.get_code(self.program))
-		self.set_step(self.step);
+		self.set_step(previous_step);
 
 	def generate_program_clicked (self, widget):
 		seed=self.wtree.get_object("program_seed").get_text()
@@ -247,7 +248,7 @@ class RobotController (object):
 		# Populate the widges with the config loaded
 		self.wtree.get_object("ticks_per_step").set_value(self.robot.ticks_per_step)
 		self.wtree.get_object("send_commands").set_active(self.robot.send_commands_flag)
-		for channel_index, setup in enumerate(self.robot.channels_setup):
+		for channel_index, setup in enumerate(self.robot._channels_setup):
 			active, is_servo, ranges, inverted = setup
 			channel = self.robot.CHANNELS[channel_index].lower()
 			self.wtree.get_object("use_%s" % channel).set_active(active)

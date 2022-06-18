@@ -13,7 +13,7 @@ fig=plt.figure()
 
 #plt.ioff()
 
-tetra = Robot('tetra')
+tetra3 = Robot('tetra3')
 #tetra.set_position(0, 1, 0, 0, 0, 240); sleep(2)
 #tetra.set_position (0, 1, 0, 0, 0, 16); sleep(2)
 
@@ -25,8 +25,8 @@ fig.show()
 def update ():
     num=0
     while running:
-        #print(tetra.get_sensors())
-        for i, y in enumerate(tetra.get_sensors()):
+        #print(tetra3.get_sensors())
+        for i, y in enumerate(tetra3.get_sensors()):
             plt.scatter(num, y, marker=markers[i])
         fig.canvas.draw()
         sleep(0.01)

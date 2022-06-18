@@ -54,9 +54,9 @@ class RobotConnection(object):
 				if length is None:
 					while not self._conn.inWaiting(): sleep(0.01)
 					num = self._conn.inWaiting()-1
-					length = self._conn.read(1)
+					length = struct.unpack('B', self._conn.read(1))[0]
 				i = 0
-				while num or i < length:
+				while num > 0 or i < length:
 					while not self._conn.inWaiting(): sleep(0.01)
 					num = self._conn.inWaiting()
 					result.extend((i for i in self._conn.read(num)))

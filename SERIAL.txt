@@ -1,8 +1,26 @@
-(Ojo, algunas veces, hay que separar los comandos en distintas lineas para que funcione)
+Instructions to configure the Bluetooth module before connecting it to the robot. HC-05 or HC-06
 
-AT+PIN1234AT+BAUD7
-# miniterm.py -b 9600 -e -D -p /dev/ttyUSB0 
---- Miniterm on /dev/ttyUSB0: 9600,8,N,1 ---
---- Quit: Ctrl+]  |  Menu: Ctrl+T | Help: Ctrl+T followed by Ctrl+H ---
-ATOKAT+PIN1234OKsetPINAT+BAUD7OK57600
---- exit ---
+I'm dealing with the basic bluetooth module, so wires have to be soldered to the module to be used
+
+Use 30 AWG wrapping wire, or annealed copper wire, so you can shape the wires in position and you don't need too many extra hands. 
+
+Connect the module to a source of 3.3V - 3.6V which can deliver at least 150mA. The Vcc and GND of a the FTDI module may not be enough
+
+Connect the FTDI wires GND, RX0 and TX0 to the Bluetooth module, inverting RX0 and TX0, so that:
+
+FTDI    Bluetooth module
+GND  -> GND
+RX0  -> TX0
+TX0  -> RX0
+
+Start the miniterm (or arduino serial monitor), specifying 9600 bauds as the speed (it's the default one set in the Bluetooth)
+# miniterm.py -e /dev/ttyUSB0 9600
+
+Copy and paste one by one the commands to setup the bluetooth module, as once connected to the arduino, it won't receive AT commands anymore.
+You should not type those commands, as normally it won't work that way. You should get an OK message after each of them. The last one
+should be to set the speed to 57600 bauds (BAUD7 from the bluetooth module documentation)
+
+AT
+AT+NAMETETRA3
+AT+PIN2345
+AT+BAUD7

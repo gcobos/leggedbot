@@ -42,7 +42,7 @@ class Robot(object):
 				config = yaml.load(f, Loader=yaml.FullLoader)
 				self.send_commands_flag = config['send_commands_flag']
 				self.ticks_per_step = config['ticks_per_step']
-				self.channels_setup = config['channels_setup']
+				self._channels_setup = config['channels_setup']
 				custom = config.get('custom') or {}
 		except IOError as e:
 			pass
@@ -53,7 +53,7 @@ class Robot(object):
 			config = {
 				'send_commands_flag': self.send_commands_flag,
 				'ticks_per_step': self.ticks_per_step,
-				'channels_setup': self.channels_setup,
+				'channels_setup': self._channels_setup,
 				'custom': custom,
 			}
 			f.write(yaml.dump(config))
@@ -80,13 +80,13 @@ class Robot(object):
 		return self.program.get_program_source_code(program)
 
 	def generate_code (self, program, seed = None, steps = 12, types_subset = None):
-		self.program.generate_code(program, channels_setup = self.channels_setup, seed = seed, steps = steps, types_subset = types_subset)
+		self.program.generate_code(program, channels_setup = self._channels_setup, seed = seed, steps = steps, types_subset = types_subset)
 
 	def upload_programs (self):
 		"""
 			Upload all the programs to the robot
 		"""
-		raw, length = self.program.get_all_raw_code(self.ticks_per_step, self.channels_setup)
+		raw, length = self.program.get_all_raw_code(self.ticks_per_step, self._channels_setup)
 		# Saves the raw programs in an accesible location
 		print("About to upload", length,"bytes...")
 		print(raw)
@@ -101,7 +101,7 @@ class Robot(object):
 		if not isinstance(channel, int):
 			channel = Robot.CHANNELS.index(channel.upper())
 
-		channels_in_use = [i for i, v in enumerate(self.channels_setup) if v[0] ]
+		channels_in_use = [i for i, v in enumerate(self._channels_setup) if v[0] ]
 		channels_lut = {k: channels_in_use.index(k) for k, _ in enumerate(Robot.CHANNELS) if k in channels_in_use}
 		if channel in channels_lut:
 			cmd = self.program.pack_command(channel, speed, mode)
@@ -117,16 +117,16 @@ class Robot(object):
 		if not isinstance(channel, int):
 			channel = Robot.CHANNELS.index(channel.upper())
 		
-		self.channels_setup[channel] = (
-			active if active is not None else self.channels_setup[channel][0],
-			is_servo if is_servo is not None else self.channels_setup[channel][1],
+		self._channels_setup[channel] = (
+			active if active is not None else self._channels_setup[channel][0],
+			is_servo if is_servo is not None else self._channels_setup[channel][1],
 			(
-				min_range if min_range is not None else self.channels_setup[channel][2][0],
-				max_range if max_range is not None else self.channels_setup[channel][2][1]
+				min_range if min_range is not None else self._channels_setup[channel][2][0],
+				max_range if max_range is not None else self._channels_setup[channel][2][1]
 			),
-			inverted if inverted is not None else self.channels_setup[channel][3],
+			inverted if inverted is not None else self._channels_setup[channel][3],
 		)
-		#print("Channels setup", self.channels_setup)
+		#print("Channels setup", self._channels_setup)
 
 	def get_positions (self):
 		self._request(-1, Robot.META_COMMAND, 0)
@@ -163,7 +163,7 @@ class Robot(object):
 					self._channel_commands[i] = []    # Deletes all pending commands from the channel
 					# Send commands optionally for legs and trunk, but allow control commands always
 					if self.send_commands_flag or i >= len(self.CHANNELS):
-						if i >= len(self.CHANNELS):        # Handles control commands and meta commands
+						if i >= len(self.CHANNELS) or i == -1:        # Handles control commands and meta commands
 							if cmd == self.CONTROL_COMMAND:
 								self._conn.send(cmd, params)
 							elif cmd == self.META_COMMAND:
@@ -173,10 +173,11 @@ class Robot(object):
 									subcmd = params
 								if subcmd == 0:           # READ POSITIONS	
 									self._conn.send(cmd, subcmd)
-									self._positions = self._recv()
+									self._positions = self._conn.recv()
 								elif subcmd == 1:         # READ SENSORS
 									self._conn.send(cmd, subcmd)
-									self._sensors = self._recv()
+									print('Sent', cmd, subcmd)
+									self._sensors = self._conn.recv()
 								elif subcmd == 255:       # UPLOAD
 									# Writes all the programs at once
 									#print("Writing programs into robot's memory")

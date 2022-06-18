@@ -1,3 +1,8 @@
+/**********************************************************
+ author: Gonzalo Cobos Bergillos
+ email: gcobos@gmail.com
+**********************************************************/
+
 #include <TimerOne.h>
 
 //#define DEBUG_PULSE 1
