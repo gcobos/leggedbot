@@ -153,42 +153,42 @@
   <object class="GtkAdjustment" id="channel_a_adj">
     <property name="lower">1</property>
     <property name="upper">255</property>
-    <property name="value">1</property>
+    <property name="value">128</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_d_adj">
     <property name="lower">1</property>
     <property name="upper">255</property>
-    <property name="value">1</property>
+    <property name="value">128</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_e_adj">
     <property name="lower">1</property>
     <property name="upper">255</property>
-    <property name="value">1</property>
+    <property name="value">128</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_q_adj">
     <property name="lower">1</property>
     <property name="upper">255</property>
-    <property name="value">1</property>
+    <property name="value">128</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_s_adj">
     <property name="lower">1</property>
     <property name="upper">255</property>
-    <property name="value">1</property>
+    <property name="value">128</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_w_adj">
     <property name="lower">1</property>
     <property name="upper">255</property>
-    <property name="value">1</property>
+    <property name="value">128</property>
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
@@ -864,7 +864,7 @@
           </packing>
         </child>
         <child>
-          <object class="GtkNotebook" id="notebook1">
+          <object class="GtkNotebook" id="channels_setup">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
             <child>

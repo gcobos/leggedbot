@@ -183,6 +183,8 @@ class RobotController (object):
 		channel_name = self._get_name(widget, prefix='channel')
 		pos = int(widget.get_value())
 		self.robot.set_position(self.program, self.step, channel_name, self.speed, self.mode, pos)
+		channels_setup_notebook = self.wtree.get_object('channels_setup')
+		channels_setup_notebook.set_current_page(self.robot.CHANNELS.index(channel_name))
 		self.refresh_code()
 
 	def min_range_changed (self, widget):
@@ -210,6 +212,9 @@ class RobotController (object):
 			other_pos = 255 - pos
 			other.set_value(other_pos)
 		self.robot.set_position(self.program, self.step, channel_name, self.speed, self.mode, pos)
+
+		channels_setup_notebook = self.wtree.get_object('channels_setup')
+		channels_setup_notebook.set_current_page(self.robot.CHANNELS.index(channel_name))
 		
 		if self.chained_trunk_flag:
 			self.robot.set_position(self.program, self.step, other_channel, self.speed, self.mode, other_pos)
