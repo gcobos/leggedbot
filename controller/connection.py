@@ -12,7 +12,7 @@ USE_ANDROID = 3
 
 class RobotConnection(object):
 
-	DEFAULT_PORTS = ["/dev/rfcomm1", "/dev/rfcomm0", "/dev/ttyUSB0", "/dev/ttyUSB1", "/dev/ttyUSB2"]
+	DEFAULT_PORTS = ["/dev/rfcomm1", "/dev/rfcomm0", "/dev/ttyUSB0", "/dev/ttyUSB4", "/dev/ttyUSB5"]
 	BAUD_RATE = 57600
 	
 	def __init__ (self, use_library=USE_AUTODETECT):

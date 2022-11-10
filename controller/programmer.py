@@ -123,6 +123,7 @@ class Signal(object):
 
 class Programmer (Module, ParameterContainer):
     """
+        This class provides a way to generate programs automatically
         Given a seed (a list of tuples) containing tuples of (type_of_signal, offset)
         generates program code.
     """

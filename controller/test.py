@@ -8,7 +8,7 @@ tetra.ticks_per_step = 10
 tetra.setup_channel('E', active = False)
 tetra.setup_channel('S', active = False)
 tetra.setup_channel('D', active = False)
-for i in range(3):  # Load programs
+for i in range(12):  # Load programs
     tetra.load(i+1)
 tetra.upload_programs()
 sleep(10)

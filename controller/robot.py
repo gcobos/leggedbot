@@ -15,7 +15,7 @@ class Robot(object):
 
 	CHANNELS = ['Q', 'W', 'E', 'A', 'S', 'D', 'R', 'T', 'Y', 'F', 'G', 'H']
 	CONTROL_COMMAND = 254
-	META_COMMAND = 255
+	MISC_COMMAND = 255
 
 	def __init__ (self, prefix=''):
 
@@ -25,7 +25,7 @@ class Robot(object):
 		self.prefix = prefix
 		# Keeps (active, is_servo, ranges, is_inverted) for every channel num
 		self._channels_setup = [(1, 1, (0, 255), 0) for i in Robot.CHANNELS]
-		# Queue of channels + one special for control & meta commands
+		# Queue of channels + one special for control & misc commands
 		self._channel_commands = [[] for i in range(len(Robot.CHANNELS)+1)]
 		self._positions = []
 		self._sensors = []
@@ -82,17 +82,21 @@ class Robot(object):
 	def generate_code (self, program, seed = None, steps = 12, types_subset = None):
 		self.program.generate_code(program, channels_setup = self._channels_setup, seed = seed, steps = steps, types_subset = types_subset)
 
-	def upload_programs (self):
+	def upload_programs (self, upload_mode = 0):
 		"""
 			Upload all the programs to the robot
+			upload_mode selects if programs will be stored in RAM (0), or in EEPROM (1) 
 		"""
 		raw, length = self.program.get_all_raw_code(self.ticks_per_step, self._channels_setup)
-		# Saves the raw programs in an accesible location
-		print("About to upload", length,"bytes...")
+		# If upload mode is EEPROM, change the first byte from 255 to 253
+		if upload_mode:
+			raw[0] = 253
+		print("About to upload", length,"bytes", "to EEPROM" if upload_mode else "to RAM")
 		print(raw)
-		with open('/home/drone/public_html/robot/programs.json', 'w') as f:
-			f.write(str([255] + raw))
-		self._request(-1, Robot.META_COMMAND, raw)
+		# Saves the raw programs in an accesible location
+		#with open('/home/drone/public_html/robot/programs.json', 'w') as f:
+		#	f.write(str([255] + raw))
+		self._request(-1, Robot.MISC_COMMAND, raw)
 	
 	def set_position (self, program, step, channel, speed, mode, pos):
 		"""
@@ -129,7 +133,7 @@ class Robot(object):
 		#print("Channels setup", self._channels_setup)
 
 	def get_positions (self):
-		self._request(-1, Robot.META_COMMAND, 0)
+		self._request(-1, Robot.MISC_COMMAND, 0)
 		while self._positions == []:
 			sleep(0.1)
 		if self._positions is None:
@@ -137,7 +141,7 @@ class Robot(object):
 		return self._positions
 
 	def get_sensors (self):
-		self._request(-1, Robot.META_COMMAND, 1)
+		self._request(-1, Robot.MISC_COMMAND, 1)
 		while self._sensors == []:
 			sleep(0.1)
 		if self._sensors is None:
@@ -163,10 +167,10 @@ class Robot(object):
 					self._channel_commands[i] = []    # Deletes all pending commands from the channel
 					# Send commands optionally for legs and trunk, but allow control commands always
 					if self.send_commands_flag or i >= len(self.CHANNELS):
-						if i >= len(self.CHANNELS) or i == -1:        # Handles control commands and meta commands
+						if i >= len(self.CHANNELS) or i == -1:        # Handles control commands and misc commands
 							if cmd == self.CONTROL_COMMAND:
 								self._conn.send(cmd, params)
-							elif cmd == self.META_COMMAND:
+							elif cmd == self.MISC_COMMAND:
 								if isinstance(params, (tuple, list)):
 									subcmd = params[0]
 								else:
@@ -178,11 +182,12 @@ class Robot(object):
 									self._conn.send(cmd, subcmd)
 									print('Sent', cmd, subcmd)
 									self._sensors = self._conn.recv()
-								elif subcmd == 255:       # UPLOAD
+								elif subcmd in (253, 254, 255):       # UPLOAD CONFIGURATION
 									# Writes all the programs at once
-									#print("Writing programs into robot's memory")
+									#print("Writing programs to the robot")
 									#print(pos)
 									self._conn.send(cmd, params)
+									print("Done")
 						else:
 							#print("Send", cmd, pos)
 							#print("Channel",cmd & 15, "Speed", (cmd >> 4))

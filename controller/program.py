@@ -28,7 +28,7 @@ class RobotProgram(object):
             
         return None
         
-    def set_command (self, program, step, cmd, pos):
+    def set_command (self, program, step, cmd, pos, extra):
         """
             Inserts or edits a single command for a program and step
         """
@@ -37,7 +37,7 @@ class RobotProgram(object):
         
         # Overwrite the channel with the new command
         channel, speed, mode = self.unpack_command(cmd)
-        self._code[program][step][channel] = {'s': speed, 'm': mode, 'v': pos}
+        self._code[program][step][channel] = {'s': speed, 'm': mode, 'v': pos, 'e': extra}
 
     def set_comment (self, program, step, comment = ''):
         """
@@ -117,6 +117,21 @@ class RobotProgram(object):
             if line:
                 channels_str = line
                 for j in channels_str.split():
+                    if j=='sleep':
+                        pr = int(j[3:])
+                        self.set_command(program, step, 253, 1, pr)
+                    if j=='jump':
+                        pr = int(j[3:])
+                        self.set_command(program, step, 253, 2, pr)
+                    if j=='jleft':
+                        pr = int(j[3:])
+                        self.set_command(program, step, 253, 3, pr)
+                    if j=='jright':
+                        pr = int(j[3:])
+                        self.set_command(program, step, 253, 4, pr)
+                    if j=='jrand':
+                        pr = int(j[3:])
+                        self.set_command(program, step, 253, 5, pr)
                     if j=='stop':
                         self.set_command(program, step, 254, 0)
                     elif j.startswith('run'):
@@ -201,7 +216,7 @@ class RobotProgram(object):
             param channels_setup: List of channels in use, their types and ranges. If None, defaults to all_channels, type = servo, full range
             Returns raw code for all the programs, just prepared to be uploaded
             Format is:
-            1-byte for 255 (meta command for upload)
+            1-byte for 255 (misc command for upload)
             2-bytes for total length
             1-byte for number of programs
             1-byte for ticks_per_step (7-4), number of channels in use (3-0)
@@ -234,7 +249,7 @@ class RobotProgram(object):
                 lengths.append(len(program_raw))
                 programs_code.extend(program_raw)
 
-        raw_code = [255]    # Upload meta command
+        raw_code = [255]    # Upload misc command (255)
         
         # Put first total length as 2-bytes (headers out, only offsets and code)
         body_length=(2*len(lengths))+len(programs_code)

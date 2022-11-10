@@ -21,6 +21,6 @@ You should not type those commands, as normally it won't work that way. You shou
 should be to set the speed to 57600 bauds (BAUD7 from the bluetooth module documentation)
 
 AT
-AT+NAMETETRA3
+AT+NAMEROBOTO1
 AT+PIN2345
 AT+BAUD7

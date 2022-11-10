@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #########################################################################
 # Reinforcement Learning with PGPE on the Tetra2 environment
 #

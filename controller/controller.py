@@ -32,13 +32,14 @@ class RobotController (object):
 		self.gladefile = "controller.glade"
 		self.wtree = Gtk.Builder()
 		self.mode = 0
+		self.upload_mode = 0
 		self.speed = 0
 		self.step = 0
-				
 		self.wtree.add_from_file(self.gladefile)
 		self.robot = Robot(self._robotname)
 		self.program = 1    # 0 means stop (not a program)
 		self.chained_trunk_flag = True
+		self.modify_code_flag = True
 
 		#Create our dictionay and connect it
 		dic = { 
@@ -53,6 +54,7 @@ class RobotController (object):
 			"on_execute_clicked" : self.execute_clicked,
 			"on_stop_clicked" : self.stop_clicked,
 			"on_send_commands_toggled" : self.send_commands_toggled,
+			"on_modify_code_toggled" : self.modify_code_toggled,
 			"on_chained_trunk_toggled" : self.chained_trunk_toggled,
 			"on_clear_clicked" : self.clear_clicked,
 			"on_generate_program_clicked" : self.generate_program_clicked,
@@ -75,12 +77,15 @@ class RobotController (object):
 			"on_ticks_per_step_changed" : self.ticks_per_step_changed,
 			"on_speed_change" : self.speed_changed,
 			"on_mode_change" : self.mode_changed,
+			"on_upload_mode_change": self.upload_mode_changed,
 			"on_MainWindow_destroy" : self.destroy,
 		}
 
 		# Get the Main Window, and connect the "destroy" event
-		self.window = self.wtree.get_object("MainWindow")        
+		self.window = self.wtree.get_object("MainWindow")
 		combo=self.wtree.get_object("mode")
+		combo.set_active(0)
+		combo=self.wtree.get_object("upload_mode")
 		combo.set_active(0)
 		codeview=self.wtree.get_object("code")
 		self.code_buffer = codeview.get_buffer()
@@ -134,7 +139,7 @@ class RobotController (object):
 
 	def upload_clicked (self, widget):
 		self.save_configuration()
-		self.robot.upload_programs()
+		self.robot.upload_programs(self.upload_mode)
 
 	def execute_clicked (self, widget):
 		#print("Execute code from program #", self.program)
@@ -143,13 +148,16 @@ class RobotController (object):
 	def stop_clicked (self, widget):
 		#print("Stop execution")
 		self.robot.stop()
-		
+
 	def send_commands_toggled (self, widget):
 		self.robot.send_commands_flag = widget.get_active()
 
+	def modify_code_toggled (self, widget):
+		self.modify_code_flag = widget.get_active()
+
 	def chained_trunk_toggled (self, widget):
 		self.chained_trunk_flag = widget.get_active()
-		
+
 	def clear_clicked (self, widget):
 		code=self.wtree.get_object("code")
 		self.robot.set_code(self.program, "")
@@ -168,7 +176,7 @@ class RobotController (object):
 		self.robot.generate_code(self.program, steps = total_steps, seed = seed, types_subset = [1,2])
 		self.refresh_code()
 		self.set_step(0)
-	
+
 	def use_channel_toggled (self, widget):
 		channel_name = self._get_name(widget, prefix='use')
 		self.robot.setup_channel(channel_name, active = widget.get_active())
@@ -185,7 +193,8 @@ class RobotController (object):
 		self.robot.set_position(self.program, self.step, channel_name, self.speed, self.mode, pos)
 		channels_setup_notebook = self.wtree.get_object('channels_setup')
 		channels_setup_notebook.set_current_page(self.robot.CHANNELS.index(channel_name))
-		self.refresh_code()
+		if self.modify_code_flag:
+			self.refresh_code()
 
 	def min_range_changed (self, widget):
 		channel_name = self._get_name(widget, prefix='min_range')
@@ -198,7 +207,7 @@ class RobotController (object):
 	def inverted_toggled (self, widget):
 		channel_name = self._get_name(widget, prefix='inverted')
 		self.robot.setup_channel(channel_name, inverted = int(widget.get_active()))
-		
+
 	def trunk_value_changed (self, widget):
 		channel_name = self._get_name(widget, prefix='channel')
 		pos = int(widget.get_value())
@@ -215,11 +224,12 @@ class RobotController (object):
 
 		channels_setup_notebook = self.wtree.get_object('channels_setup')
 		channels_setup_notebook.set_current_page(self.robot.CHANNELS.index(channel_name))
-		
+
 		if self.chained_trunk_flag:
 			self.robot.set_position(self.program, self.step, other_channel, self.speed, self.mode, other_pos)
-		self.refresh_code()
-			
+		if self.modify_code_flag:
+			self.refresh_code()
+
 	def speed_changed (self, widget):
 		self.speed = int(widget.get_value())-1
 		#print("Speed set to", self.speed+1)
@@ -244,15 +254,20 @@ class RobotController (object):
 		self.mode = int(widget.get_active())
 		#print("Mode set to", self.mode + 1)
 
+	def upload_mode_changed (self, widget):
+		self.upload_mode = int(widget.get_active())
+		print("Upload mode set to", self.upload_mode + 1)
+
 	def load_config (self, suffix = ''):
 		with open('%s%s.conf' % (prefix, suffix), 'r') as f:
 			config = yaml.load(f)
-		
+
 	def load_configuration (self):
 		custom = self.robot.load_config()
 		# Populate the widges with the config loaded
 		self.wtree.get_object("ticks_per_step").set_value(self.robot.ticks_per_step)
 		self.wtree.get_object("send_commands").set_active(self.robot.send_commands_flag)
+		self.wtree.get_object("modify_code").set_active(self.modify_code_flag)
 		for channel_index, setup in enumerate(self.robot._channels_setup):
 			active, is_servo, ranges, inverted = setup
 			channel = self.robot.CHANNELS[channel_index].lower()
@@ -261,14 +276,13 @@ class RobotController (object):
 			self.wtree.get_object("min_range_%s" % channel).set_value(int(ranges[0]))
 			self.wtree.get_object("max_range_%s" % channel).set_value(int(ranges[1]))
 			self.wtree.get_object("inverted_%s" % channel).set_active(inverted)
-		
+
 		# Custom variables
 		self.chained_trunk_flag = custom.get('chained_trunk')
 		self.wtree.get_object("chained_trunk").set_active(self.chained_trunk_flag if self.chained_trunk_flag is not None else True)
-		
+
 	def save_configuration (self):
 		self.robot.save_config(custom = {'chained_trunk': self.chained_trunk_flag})
-
 
 	def _get_name(self, obj, prefix=''):
 		return Gtk.Buildable.get_name(obj).replace(prefix + "_", "").upper()
@@ -281,4 +295,3 @@ if __name__ == "__main__":
 	else:
 		RobotController(sys.argv[1])
 		Gtk.main()
-

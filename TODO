@@ -3,6 +3,7 @@
   255 + 255 is upload
   255 + 0 is read actuators: Returns the posisiton of all the actuators
   255 + 1 is read sensors: Returns the values for all 4 analogic inputs to the controller
+  255 + 2 is jump if condition is true
 
 * Preserve comments in programs
 

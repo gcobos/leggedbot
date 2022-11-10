@@ -1,196 +1,192 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.2 -->
+<!-- Generated with glade 3.38.2 -->
 <interface>
   <requires lib="gtk+" version="3.20"/>
   <object class="GtkAdjustment" id="adjustment1">
+    <property name="lower">1</property>
     <property name="upper">250</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="value">1</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment10">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment11">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment12">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment13">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment14">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment15">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment16">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment17">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment18">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment19">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment2">
     <property name="lower">1</property>
     <property name="upper">16</property>
     <property name="value">1</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">1</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
   </object>
   <object class="GtkAdjustment" id="adjustment20">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment21">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment22">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment23">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment24">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment25">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment26">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment27">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment28">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment29">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment3">
     <property name="lower">1</property>
     <property name="upper">16</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">1</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">1</property>
   </object>
   <object class="GtkAdjustment" id="adjustment4">
     <property name="upper">240</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment5">
     <property name="upper">100</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment6">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment7">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment8">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="adjustment9">
     <property name="upper">255</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_a_adj">
-    <property name="lower">1</property>
     <property name="upper">255</property>
     <property name="value">128</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_d_adj">
-    <property name="lower">1</property>
     <property name="upper">255</property>
     <property name="value">128</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_e_adj">
-    <property name="lower">1</property>
     <property name="upper">255</property>
     <property name="value">128</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_q_adj">
-    <property name="lower">1</property>
     <property name="upper">255</property>
     <property name="value">128</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_s_adj">
-    <property name="lower">1</property>
     <property name="upper">255</property>
     <property name="value">128</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkAdjustment" id="channel_w_adj">
-    <property name="lower">1</property>
     <property name="upper">255</property>
     <property name="value">128</property>
-    <property name="step_increment">1</property>
-    <property name="page_increment">10</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkTextBuffer" id="code_buffer">
     <signal name="notify::cursor-position" handler="on_code_move_cursor" swapped="no"/>
@@ -221,43 +217,56 @@
       </row>
     </data>
   </object>
+  <object class="GtkListStore" id="liststore2">
+    <columns>
+      <!-- column-name gint1 -->
+      <column type="gint"/>
+      <!-- column-name gchararray1 -->
+      <column type="gchararray"/>
+    </columns>
+    <data>
+      <row>
+        <col id="0">0</col>
+        <col id="1" translatable="yes">RAM</col>
+      </row>
+      <row>
+        <col id="0">1</col>
+        <col id="1" translatable="yes">EEPROM</col>
+      </row>
+    </data>
+  </object>
   <object class="GtkWindow" id="MainWindow">
-    <property name="width_request">700</property>
-    <property name="height_request">640</property>
-    <property name="can_focus">False</property>
+    <property name="width-request">700</property>
+    <property name="height-request">640</property>
+    <property name="can-focus">False</property>
     <property name="title" translatable="yes">Tetrapod controller</property>
-    <property name="window_position">center</property>
-    <property name="default_width">550</property>
-    <property name="default_height">640</property>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
+    <property name="window-position">center</property>
+    <property name="default-width">550</property>
+    <property name="default-height">640</property>
     <child>
       <object class="GtkBox" id="vbox1">
         <property name="visible">True</property>
-        <property name="can_focus">False</property>
+        <property name="can-focus">False</property>
         <property name="orientation">vertical</property>
         <child>
           <object class="GtkBox" id="vbox7">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="orientation">vertical</property>
             <child>
               <object class="GtkScrolledWindow" id="scrolledwindow1">
-                <property name="height_request">150</property>
+                <property name="height-request">150</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
+                <property name="can-focus">True</property>
                 <child>
                   <object class="GtkTextView" id="code">
-                    <property name="height_request">150</property>
+                    <property name="height-request">150</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="wrap_mode">word-char</property>
+                    <property name="can-focus">True</property>
+                    <property name="wrap-mode">word-char</property>
                     <property name="buffer">code_buffer</property>
                     <property name="monospace">True</property>
-                    <!--<signal name="button-press-event" handler="on_code_move_cursor" swapped="no"/>-->
                     <signal name="focus-out-event" handler="on_code_changed" swapped="no"/>
-                    <!--<signal name="key-press-event" handler="on_code_move_cursor" swapped="no"/>-->
                   </object>
                 </child>
               </object>
@@ -270,11 +279,11 @@
             <child>
               <object class="GtkBox" id="hbox4">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkLabel" id="label3">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Program #</property>
                   </object>
                   <packing>
@@ -286,10 +295,10 @@
                 <child>
                   <object class="GtkSpinButton" id="program">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="invisible_char">•</property>
-                    <property name="primary_icon_activatable">False</property>
-                    <property name="secondary_icon_activatable">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="invisible-char">•</property>
+                    <property name="primary-icon-activatable">False</property>
+                    <property name="secondary-icon-activatable">False</property>
                     <property name="adjustment">adjustment1</property>
                     <property name="numeric">True</property>
                     <signal name="value-changed" handler="on_program_value_changed" swapped="no"/>
@@ -304,8 +313,8 @@
                   <object class="GtkButton" id="load">
                     <property name="label" translatable="yes">Load</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
                     <signal name="clicked" handler="on_load_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -318,8 +327,8 @@
                   <object class="GtkButton" id="save">
                     <property name="label" translatable="yes">Save</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
                     <signal name="clicked" handler="on_save_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -331,7 +340,7 @@
                 <child>
                   <object class="GtkAlignment" id="alignment8">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -346,8 +355,8 @@
                   <object class="GtkButton" id="execute">
                     <property name="label" translatable="yes">Run#</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
                     <signal name="clicked" handler="on_execute_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -360,8 +369,8 @@
                   <object class="GtkButton" id="stop">
                     <property name="label" translatable="yes">Stop</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
                     <signal name="clicked" handler="on_stop_clicked" swapped="no"/>
                   </object>
                   <packing>
@@ -373,13 +382,13 @@
                 <child>
                   <object class="GtkAlignment" id="alignment6">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <child>
                       <object class="GtkButton" id="upload">
                         <property name="label" translatable="yes">Upload</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
+                        <property name="can-focus">True</property>
+                        <property name="receives-default">True</property>
                         <signal name="clicked" handler="on_upload_clicked" swapped="no"/>
                       </object>
                     </child>
@@ -391,11 +400,20 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkAlignment" id="alignment1">
+                  <object class="GtkComboBox" id="upload_mode">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
+                    <property name="can-default">True</property>
+                    <property name="has-default">True</property>
+                    <property name="receives-default">True</property>
+                    <property name="model">liststore2</property>
+                    <property name="active">1</property>
+                    <signal name="changed" handler="on_upload_mode_change" swapped="no"/>
                     <child>
-                      <placeholder/>
+                      <object class="GtkCellRendererText" id="renderer"/>
+                      <attributes>
+                        <attribute name="text">1</attribute>
+                      </attributes>
                     </child>
                   </object>
                   <packing>
@@ -405,14 +423,12 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkCheckButton" id="send_commands">
-                    <property name="label" translatable="yes">Send commands</property>
+                  <object class="GtkAlignment" id="alignment1">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
-                    <signal name="toggled" handler="on_send_commands_toggled" swapped="no"/>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <placeholder/>
+                    </child>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -421,12 +437,14 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkAlignment" id="alignment7">
+                  <object class="GtkCheckButton" id="send_commands">
+                    <property name="label" translatable="yes">Send changes</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <child>
-                      <placeholder/>
-                    </child>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="active">True</property>
+                    <property name="draw-indicator">True</property>
+                    <signal name="toggled" handler="on_send_commands_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">True</property>
@@ -435,17 +453,33 @@
                   </packing>
                 </child>
                 <child>
-                  <object class="GtkButton" id="clear">
-                    <property name="label" translatable="yes">Clear</property>
+                  <object class="GtkCheckButton" id="modify_code">
+                    <property name="label" translatable="yes">Modify code</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <signal name="clicked" handler="on_clear_clicked" swapped="no"/>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="active">True</property>
+                    <property name="draw-indicator">True</property>
+                    <signal name="toggled" handler="on_modify_code_toggled" swapped="no"/>
                   </object>
                   <packing>
                     <property name="expand">True</property>
                     <property name="fill">True</property>
                     <property name="position">11</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="clear">
+                    <property name="label" translatable="yes">Clear</property>
+                    <property name="visible">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">True</property>
+                    <signal name="clicked" handler="on_clear_clicked" swapped="no"/>
+                  </object>
+                  <packing>
+                    <property name="expand">True</property>
+                    <property name="fill">True</property>
+                    <property name="position">12</property>
                   </packing>
                 </child>
               </object>
@@ -465,7 +499,7 @@
         <child>
           <object class="GtkSeparator" id="hseparator1">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -476,7 +510,7 @@
         <child>
           <object class="GtkSeparator" id="hseparator3">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -487,18 +521,18 @@
         <child>
           <object class="GtkBox" id="hbox1">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <child>
               <object class="GtkBox" id="vbox2">
-                <property name="width_request">100</property>
+                <property name="width-request">100</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkAlignment" id="alignment5">
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -511,14 +545,14 @@
                 </child>
                 <child>
                   <object class="GtkScale" id="channel_q">
-                    <property name="width_request">50</property>
+                    <property name="width-request">50</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">channel_q_adj</property>
-                    <property name="fill_level">255</property>
-                    <property name="round_digits">1</property>
+                    <property name="fill-level">255</property>
+                    <property name="round-digits">1</property>
                     <property name="digits">0</property>
-                    <property name="value_pos">right</property>
+                    <property name="value-pos">right</property>
                     <signal name="value-changed" handler="on_leg_value_change" swapped="no"/>
                   </object>
                   <packing>
@@ -530,7 +564,7 @@
                 <child>
                   <object class="GtkImage" id="image2">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="pixbuf">img/left.png</property>
                   </object>
                   <packing>
@@ -541,13 +575,13 @@
                 </child>
                 <child>
                   <object class="GtkScale" id="channel_a">
-                    <property name="width_request">50</property>
+                    <property name="width-request">50</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">channel_a_adj</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
-                    <property name="value_pos">right</property>
+                    <property name="value-pos">right</property>
                     <signal name="value-changed" handler="on_leg_value_change" swapped="no"/>
                   </object>
                   <packing>
@@ -567,17 +601,17 @@
             <child>
               <object class="GtkBox" id="vbox6">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkCheckButton" id="chained_trunk">
                     <property name="label" translatable="yes">Chained W/S</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_chained_trunk_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -589,16 +623,16 @@
                 <child>
                   <object class="GtkAlignment" id="alignment3">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="yalign">0</property>
                     <child>
                       <object class="GtkScale" id="channel_w">
-                        <property name="height_request">50</property>
+                        <property name="height-request">50</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can-focus">True</property>
                         <property name="adjustment">channel_w_adj</property>
-                        <property name="show_fill_level">True</property>
-                        <property name="round_digits">1</property>
+                        <property name="show-fill-level">True</property>
+                        <property name="round-digits">1</property>
                         <property name="digits">0</property>
                         <signal name="value-changed" handler="on_trunk_value_change" swapped="no"/>
                       </object>
@@ -613,7 +647,7 @@
                 <child>
                   <object class="GtkImage" id="image3">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="pixbuf">img/trunk.png</property>
                   </object>
                   <packing>
@@ -625,18 +659,18 @@
                 <child>
                   <object class="GtkAlignment" id="alignment2">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="yalign">1</property>
                     <child>
                       <object class="GtkScale" id="channel_s">
-                        <property name="height_request">50</property>
+                        <property name="height-request">50</property>
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
+                        <property name="can-focus">True</property>
                         <property name="adjustment">channel_s_adj</property>
-                        <property name="show_fill_level">True</property>
-                        <property name="round_digits">0</property>
+                        <property name="show-fill-level">True</property>
+                        <property name="round-digits">0</property>
                         <property name="digits">0</property>
-                        <property name="value_pos">bottom</property>
+                        <property name="value-pos">bottom</property>
                         <signal name="value-changed" handler="on_trunk_value_change" swapped="no"/>
                       </object>
                     </child>
@@ -656,15 +690,15 @@
             </child>
             <child>
               <object class="GtkBox" id="vbox3">
-                <property name="width_request">100</property>
+                <property name="width-request">100</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkAlignment" id="alignment4">
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <child>
                       <placeholder/>
                     </child>
@@ -677,13 +711,13 @@
                 </child>
                 <child>
                   <object class="GtkScale" id="channel_e">
-                    <property name="width_request">50</property>
+                    <property name="width-request">50</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">channel_e_adj</property>
-                    <property name="round_digits">1</property>
+                    <property name="round-digits">1</property>
                     <property name="digits">0</property>
-                    <property name="value_pos">left</property>
+                    <property name="value-pos">left</property>
                     <signal name="value-changed" handler="on_leg_value_change" swapped="no"/>
                   </object>
                   <packing>
@@ -695,7 +729,7 @@
                 <child>
                   <object class="GtkImage" id="image1">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="pixbuf">img/right.png</property>
                   </object>
                   <packing>
@@ -706,13 +740,13 @@
                 </child>
                 <child>
                   <object class="GtkScale" id="channel_d">
-                    <property name="width_request">50</property>
+                    <property name="width-request">50</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">channel_d_adj</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
-                    <property name="value_pos">left</property>
+                    <property name="value-pos">left</property>
                     <signal name="value-changed" handler="on_leg_value_change" swapped="no"/>
                   </object>
                   <packing>
@@ -739,7 +773,7 @@
         <child>
           <object class="GtkSeparator" id="hseparator4">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -750,7 +784,7 @@
         <child>
           <object class="GtkLabel" id="label43">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="label" translatable="yes">Program generation</property>
           </object>
           <packing>
@@ -762,11 +796,11 @@
         <child>
           <object class="GtkBox" id="hbox5">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <child>
               <object class="GtkLabel" id="label45">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Seed</property>
                 <property name="xalign">0.89999997615814209</property>
               </object>
@@ -779,10 +813,10 @@
             <child>
               <object class="GtkEntry" id="program_seed">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="invisible_char">•</property>
-                <property name="primary_icon_activatable">False</property>
-                <property name="secondary_icon_activatable">False</property>
+                <property name="can-focus">True</property>
+                <property name="invisible-char">•</property>
+                <property name="primary-icon-activatable">False</property>
+                <property name="secondary-icon-activatable">False</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -793,7 +827,7 @@
             <child>
               <object class="GtkLabel" id="label44">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Number of steps</property>
                 <property name="xalign">0.89999997615814209</property>
               </object>
@@ -806,12 +840,14 @@
             <child>
               <object class="GtkSpinButton" id="total_steps">
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="invisible_char">•</property>
-                <property name="primary_icon_activatable">False</property>
-                <property name="secondary_icon_activatable">False</property>
+                <property name="can-focus">True</property>
+                <property name="invisible-char">•</property>
+                <property name="primary-icon-activatable">False</property>
+                <property name="secondary-icon-activatable">False</property>
                 <property name="adjustment">adjustment5</property>
+                <property name="climb-rate">1</property>
                 <property name="numeric">True</property>
+                <property name="value">20</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -823,8 +859,8 @@
               <object class="GtkButton" id="generate_program">
                 <property name="label" translatable="yes">Generate</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
                 <signal name="clicked" handler="on_generate_program_clicked" swapped="no"/>
               </object>
               <packing>
@@ -843,7 +879,7 @@
         <child>
           <object class="GtkSeparator" id="hseparator5">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -852,34 +888,22 @@
           </packing>
         </child>
         <child>
-          <object class="GtkLabel" id="label24">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-            <property name="label" translatable="yes">Channels setup</property>
-          </object>
-          <packing>
-            <property name="expand">True</property>
-            <property name="fill">True</property>
-            <property name="position">9</property>
-          </packing>
-        </child>
-        <child>
           <object class="GtkNotebook" id="channels_setup">
             <property name="visible">True</property>
-            <property name="can_focus">True</property>
+            <property name="can-focus">True</property>
             <child>
               <object class="GtkBox" id="hbox7">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_q">
                     <property name="label" translatable="yes">"Q" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_q_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -892,9 +916,9 @@
                   <object class="GtkCheckButton" id="inverted_q">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -906,7 +930,7 @@
                 <child>
                   <object class="GtkLabel" id="label9">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -919,9 +943,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_q">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment6</property>
-                    <property name="round_digits">1</property>
+                    <property name="round-digits">1</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -934,7 +958,7 @@
                 <child>
                   <object class="GtkLabel" id="label10">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -947,9 +971,9 @@
                 <child>
                   <object class="GtkScale" id="max_range_q">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment7</property>
-                    <property name="round_digits">1</property>
+                    <property name="round-digits">1</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -964,27 +988,27 @@
             <child type="tab">
               <object class="GtkLabel" id="label6">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> Q </property>
               </object>
               <packing>
                 <property name="position">1</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="hbox8">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_w">
                     <property name="label" translatable="yes">"W" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_w_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -997,9 +1021,9 @@
                   <object class="GtkCheckButton" id="inverted_w">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1011,7 +1035,7 @@
                 <child>
                   <object class="GtkLabel" id="label11">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1024,9 +1048,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_w">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment8</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -1039,7 +1063,7 @@
                 <child>
                   <object class="GtkLabel" id="label12">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1052,9 +1076,9 @@
                 <child>
                   <object class="GtkScale" id="max_range_w">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment9</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -1072,27 +1096,27 @@
             <child type="tab">
               <object class="GtkLabel" id="label7">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> W </property>
               </object>
               <packing>
                 <property name="position">1</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="hbox9">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_e">
                     <property name="label" translatable="yes">"E" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_e_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1105,9 +1129,9 @@
                   <object class="GtkCheckButton" id="inverted_e">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1119,7 +1143,7 @@
                 <child>
                   <object class="GtkLabel" id="label13">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1132,9 +1156,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_e">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment10</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -1147,7 +1171,7 @@
                 <child>
                   <object class="GtkLabel" id="label14">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1160,9 +1184,9 @@
                 <child>
                   <object class="GtkScale" id="max_range_e">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment11</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -1180,27 +1204,27 @@
             <child type="tab">
               <object class="GtkLabel" id="label8">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> E </property>
               </object>
               <packing>
                 <property name="position">2</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="hbox10">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_a">
                     <property name="label" translatable="yes">"A" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_a_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1213,9 +1237,9 @@
                   <object class="GtkCheckButton" id="inverted_a">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1227,7 +1251,7 @@
                 <child>
                   <object class="GtkLabel" id="label25">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1240,9 +1264,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_a">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment12</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -1255,7 +1279,7 @@
                 <child>
                   <object class="GtkLabel" id="label26">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1268,9 +1292,9 @@
                 <child>
                   <object class="GtkScale" id="max_range_a">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment13</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -1288,27 +1312,27 @@
             <child type="tab">
               <object class="GtkLabel" id="label15">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> A </property>
               </object>
               <packing>
                 <property name="position">3</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="hbox11">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_s">
                     <property name="label" translatable="yes">"S" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_s_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1321,9 +1345,9 @@
                   <object class="GtkCheckButton" id="inverted_s">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1335,7 +1359,7 @@
                 <child>
                   <object class="GtkLabel" id="label27">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1348,9 +1372,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_s">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment14</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -1363,7 +1387,7 @@
                 <child>
                   <object class="GtkLabel" id="label28">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1376,9 +1400,9 @@
                 <child>
                   <object class="GtkScale" id="max_range_s">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment15</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -1396,27 +1420,27 @@
             <child type="tab">
               <object class="GtkLabel" id="label16">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> S </property>
               </object>
               <packing>
                 <property name="position">4</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="hbox12">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_d">
                     <property name="label" translatable="yes">"D" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_d_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1429,9 +1453,9 @@
                   <object class="GtkCheckButton" id="inverted_d">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1443,7 +1467,7 @@
                 <child>
                   <object class="GtkLabel" id="label29">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1456,9 +1480,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_d">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment16</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -1471,7 +1495,7 @@
                 <child>
                   <object class="GtkLabel" id="label30">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1484,9 +1508,9 @@
                 <child>
                   <object class="GtkScale" id="max_range_d">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment17</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -1504,27 +1528,27 @@
             <child type="tab">
               <object class="GtkLabel" id="label17">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> D </property>
               </object>
               <packing>
                 <property name="position">5</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="hbox13">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_r">
                     <property name="label" translatable="yes">"R" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_r_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1537,9 +1561,9 @@
                   <object class="GtkCheckButton" id="inverted_r">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1551,7 +1575,7 @@
                 <child>
                   <object class="GtkLabel" id="label31">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1564,9 +1588,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_r">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment18</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -1579,7 +1603,7 @@
                 <child>
                   <object class="GtkLabel" id="label32">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1592,9 +1616,9 @@
                 <child>
                   <object class="GtkScale" id="max_range_r">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment19</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -1612,27 +1636,27 @@
             <child type="tab">
               <object class="GtkLabel" id="label18">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> R </property>
               </object>
               <packing>
                 <property name="position">6</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="hbox14">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_t">
                     <property name="label" translatable="yes">"T" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_t_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1645,9 +1669,9 @@
                   <object class="GtkCheckButton" id="inverted_t">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1659,7 +1683,7 @@
                 <child>
                   <object class="GtkLabel" id="label33">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1672,9 +1696,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_t">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment20</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -1687,7 +1711,7 @@
                 <child>
                   <object class="GtkLabel" id="label34">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1700,9 +1724,9 @@
                 <child>
                   <object class="GtkScale" id="max_range_t">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment21</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -1720,27 +1744,27 @@
             <child type="tab">
               <object class="GtkLabel" id="label19">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> T </property>
               </object>
               <packing>
                 <property name="position">7</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="hbox15">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_y">
                     <property name="label" translatable="yes">"Y" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_y_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1753,9 +1777,9 @@
                   <object class="GtkCheckButton" id="inverted_y">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1767,7 +1791,7 @@
                 <child>
                   <object class="GtkLabel" id="label35">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1780,9 +1804,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_y">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment22</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -1795,7 +1819,7 @@
                 <child>
                   <object class="GtkLabel" id="label36">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1808,9 +1832,9 @@
                 <child>
                   <object class="GtkScale" id="max_range_y">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment23</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -1828,27 +1852,27 @@
             <child type="tab">
               <object class="GtkLabel" id="label20">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> Y </property>
               </object>
               <packing>
                 <property name="position">8</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="hbox16">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_f">
                     <property name="label" translatable="yes">"F" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_f_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1861,9 +1885,9 @@
                   <object class="GtkCheckButton" id="inverted_f">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1875,7 +1899,7 @@
                 <child>
                   <object class="GtkLabel" id="label37">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1888,9 +1912,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_f">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment24</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -1903,7 +1927,7 @@
                 <child>
                   <object class="GtkLabel" id="label38">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1916,9 +1940,9 @@
                 <child>
                   <object class="GtkScale" id="max_range_f">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment25</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -1936,27 +1960,27 @@
             <child type="tab">
               <object class="GtkLabel" id="label21">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> F </property>
               </object>
               <packing>
                 <property name="position">9</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="hbox17">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_g">
                     <property name="label" translatable="yes">"G" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_g_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1969,9 +1993,9 @@
                   <object class="GtkCheckButton" id="inverted_g">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -1983,7 +2007,7 @@
                 <child>
                   <object class="GtkLabel" id="label39">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -1996,9 +2020,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_g">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment26</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -2011,7 +2035,7 @@
                 <child>
                   <object class="GtkLabel" id="label40">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -2024,9 +2048,9 @@
                 <child>
                   <object class="GtkScale" id="max_range_g">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment27</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -2044,27 +2068,27 @@
             <child type="tab">
               <object class="GtkLabel" id="label22">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> G </property>
               </object>
               <packing>
                 <property name="position">10</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
             <child>
               <object class="GtkBox" id="hbox18">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <child>
                   <object class="GtkCheckButton" id="use_h">
                     <property name="label" translatable="yes">"H" active</property>
-                    <property name="height_request">20</property>
+                    <property name="height-request">20</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
                     <property name="active">True</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_use_h_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -2077,9 +2101,9 @@
                   <object class="GtkCheckButton" id="inverted_h">
                     <property name="label" translatable="yes">Inverted</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">False</property>
-                    <property name="draw_indicator">True</property>
+                    <property name="can-focus">True</property>
+                    <property name="receives-default">False</property>
+                    <property name="draw-indicator">True</property>
                     <signal name="toggled" handler="on_inverted_toggled" swapped="no"/>
                   </object>
                   <packing>
@@ -2091,7 +2115,7 @@
                 <child>
                   <object class="GtkLabel" id="label41">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Minimum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -2104,9 +2128,9 @@
                 <child>
                   <object class="GtkScale" id="min_range_h">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment28</property>
-                    <property name="round_digits">0</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_min_range_change" swapped="no"/>
                   </object>
@@ -2119,7 +2143,7 @@
                 <child>
                   <object class="GtkLabel" id="label42">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Maximum</property>
                     <property name="xalign">0.89999997615814209</property>
                   </object>
@@ -2132,10 +2156,10 @@
                 <child>
                   <object class="GtkScale" id="max_range_h">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment29</property>
-                    <property name="show_fill_level">True</property>
-                    <property name="round_digits">0</property>
+                    <property name="show-fill-level">True</property>
+                    <property name="round-digits">0</property>
                     <property name="digits">0</property>
                     <signal name="value-changed" handler="on_max_range_change" swapped="no"/>
                   </object>
@@ -2153,12 +2177,12 @@
             <child type="tab">
               <object class="GtkLabel" id="label23">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="label" translatable="yes"> H </property>
               </object>
               <packing>
                 <property name="position">11</property>
-                <property name="tab_fill">False</property>
+                <property name="tab-fill">False</property>
               </packing>
             </child>
           </object>
@@ -2169,19 +2193,31 @@
           </packing>
         </child>
         <child>
+          <object class="GtkLabel" id="label24">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Channels setup</property>
+          </object>
+          <packing>
+            <property name="expand">True</property>
+            <property name="fill">True</property>
+            <property name="position">9</property>
+          </packing>
+        </child>
+        <child>
           <object class="GtkBox" id="hbox3">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="spacing">80</property>
             <child>
               <object class="GtkBox" id="vbox4">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="label1">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Speed</property>
                     <property name="xalign">0</property>
                   </object>
@@ -2194,12 +2230,12 @@
                 <child>
                   <object class="GtkScale" id="speed">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
+                    <property name="can-focus">True</property>
                     <property name="adjustment">adjustment2</property>
-                    <property name="show_fill_level">True</property>
-                    <property name="round_digits">1</property>
+                    <property name="show-fill-level">True</property>
+                    <property name="round-digits">1</property>
                     <property name="digits">0</property>
-                    <property name="value_pos">left</property>
+                    <property name="value-pos">left</property>
                     <signal name="value-changed" handler="on_speed_change" swapped="no"/>
                   </object>
                   <packing>
@@ -2218,12 +2254,12 @@
             <child>
               <object class="GtkBox" id="vbox9">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="label5">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Ticks per step</property>
                   </object>
                   <packing>
@@ -2235,10 +2271,10 @@
                 <child>
                   <object class="GtkSpinButton" id="ticks_per_step">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="invisible_char">•</property>
-                    <property name="primary_icon_activatable">False</property>
-                    <property name="secondary_icon_activatable">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="invisible-char">•</property>
+                    <property name="primary-icon-activatable">False</property>
+                    <property name="secondary-icon-activatable">False</property>
                     <property name="adjustment">adjustment3</property>
                     <property name="numeric">True</property>
                     <signal name="value-changed" handler="on_ticks_per_step_changed" swapped="no"/>
@@ -2259,12 +2295,12 @@
             <child>
               <object class="GtkBox" id="vbox8">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="label4">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Step</property>
                     <property name="xalign">0</property>
                   </object>
@@ -2277,10 +2313,10 @@
                 <child>
                   <object class="GtkSpinButton" id="step">
                     <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="invisible_char">•</property>
-                    <property name="primary_icon_activatable">False</property>
-                    <property name="secondary_icon_activatable">False</property>
+                    <property name="can-focus">True</property>
+                    <property name="invisible-char">•</property>
+                    <property name="primary-icon-activatable">False</property>
+                    <property name="secondary-icon-activatable">False</property>
                     <property name="adjustment">adjustment4</property>
                     <property name="numeric">True</property>
                     <signal name="value-changed" handler="on_step_changed" swapped="no"/>
@@ -2301,12 +2337,12 @@
             <child>
               <object class="GtkBox" id="vbox5">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
+                <property name="can-focus">False</property>
                 <property name="orientation">vertical</property>
                 <child>
                   <object class="GtkLabel" id="label2">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
+                    <property name="can-focus">False</property>
                     <property name="label" translatable="yes">Mode
 </property>
                     <property name="xalign">0</property>
@@ -2320,15 +2356,15 @@
                 <child>
                   <object class="GtkComboBox" id="mode">
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="can_default">True</property>
-                    <property name="has_default">True</property>
-                    <property name="receives_default">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="can-default">True</property>
+                    <property name="has-default">True</property>
+                    <property name="receives-default">True</property>
                     <property name="model">liststore1</property>
                     <property name="active">1</property>
                     <signal name="changed" handler="on_mode_change" swapped="no"/>
                     <child>
-                      <object class="GtkCellRendererText" id="renderer"/>
+                      <object class="GtkCellRendererText" id="renderer1"/>
                       <attributes>
                         <attribute name="text">1</attribute>
                       </attributes>
@@ -2357,7 +2393,7 @@
         <child>
           <object class="GtkSeparator" id="hseparator6">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
           </object>
           <packing>
             <property name="expand">False</property>
@@ -2368,7 +2404,7 @@
         <child>
           <object class="GtkBox" id="hbox2">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
             <property name="homogeneous">True</property>
             <child>
               <placeholder/>
@@ -2377,8 +2413,8 @@
               <object class="GtkButton" id="quit_button">
                 <property name="label" translatable="yes">Exit</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
                 <signal name="clicked" handler="on_MainWindow_destroy" swapped="no"/>
               </object>
               <packing>
@@ -2400,7 +2436,7 @@
         <child>
           <object class="GtkSeparator" id="hseparator2">
             <property name="visible">True</property>
-            <property name="can_focus">False</property>
+            <property name="can-focus">False</property>
           </object>
           <packing>
             <property name="expand">False</property>
