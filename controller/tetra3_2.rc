@@ -1,9 +1,13 @@
+Q255s16 A0s16		# Forwards
+
+W0s16
+
+S255s16
+
 Q0s16 A255s16
 
-W255s16 S0s16
+W250s16
 
-Q255s16 A0s16
-
-W0s16 S255s16
+S0s16
 
 restart

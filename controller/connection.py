@@ -12,7 +12,7 @@ USE_ANDROID = 3
 
 class RobotConnection(object):
 
-	DEFAULT_PORTS = ["/dev/rfcomm1", "/dev/rfcomm0", "/dev/ttyUSB0", "/dev/ttyUSB4", "/dev/ttyUSB5"]
+	DEFAULT_PORTS = ["/dev/rfcomm1", "/dev/rfcomm0", "/dev/ttyUSB0", "/dev/ttyUSB1", "/dev/ttyUSB4", "/dev/ttyUSB5"]
 	BAUD_RATE = 57600
 	
 	def __init__ (self, use_library=USE_AUTODETECT):
@@ -28,7 +28,7 @@ class RobotConnection(object):
 			try:
 				self._conn = serial.Serial()
 				self._conn.port = device
-				self._conn.timeout = 2
+				self._conn.timeout = 10
 				self._conn.baudrate = self.BAUD_RATE
 				self._conn.open()
 				self._conn.flush()
@@ -81,8 +81,13 @@ class RobotConnection(object):
 				data += struct.pack('B', i)
 		while True:
 			try:
-				#print("Writing", len(data))
-				self._conn.write(data)
+				#print("Writing", len(data), "bytes\n", cmd, "\n",  params)
+				# Serial read buffer in arduino is normally 64 bytes
+				for start in range(0, len(data), 32):
+					chunk = data[start:start + 32]
+					#print("sending chunk:", chunk)
+					self._conn.write(chunk)
+					sleep(0.2)
 				if flush:
 					self._conn.flush()
 				sleep(0.01)
@@ -90,7 +95,7 @@ class RobotConnection(object):
 			except (serial.SerialException, ValueError, IOError) as e:
 				print("Error?", e)
 				sleep(1)
-				#print("Reconnecting...", retries)
+				print("Reconnecting...", retries)
 				try:
 					if self._conn:
 						self._conn.close()

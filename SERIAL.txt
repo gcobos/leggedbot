@@ -24,3 +24,21 @@ AT
 AT+NAMEROBOTO1
 AT+PIN2345
 AT+BAUD7
+
+
+
+Use this command to find devices:
+
+$ sudo hcitool scan
+Scanning ...
+	98:D3:31:B0:94:55	TETRA3
+
+NOTE: For LE devices, use: sudo hcitool lescan
+
+Pair the computer to the bluetooth device, by giving the PIN
+
+Then, use this command to connect to it as serial tty:
+
+$ sudo rfcomm connect /dev/rfcomm0 98:D3:31:B0:94:55 1
+Connected /dev/rfcomm0 to 98:D3:31:B0:94:55 on channel 1
+Press CTRL-C for hangup

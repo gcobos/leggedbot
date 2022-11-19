@@ -6,9 +6,9 @@
 #include <TimerOne.h>
 #include <EEPROM.h>
 
-//#define DEBUG_PULSE                   // Make easier to debug servo pulses with an oscilloscope. Do NOT connect servos when debugging
+//#define DEBUG                   // Makes easier to debug servo pulses with an oscilloscope. Do NOT connect servos when debugging
 
-//#define USE_I2C_COMMUNICATION           // Uncomment this to use NUNCHUCK, SNES WIRELESS PAD, etc
+//#define USE_I2C_COMMUNICATION           // Uncomment this to use NUNCHUCK, SNES WIRELESS PAD, etc. Do not enable it unless you have the receiver installed
 
 #ifdef USE_I2C_COMMUNICATION
 #include <Wire.h>
@@ -17,39 +17,35 @@
 #define NUNCHUCK_READ_LENGTH 6
 #endif
 
-#define MEM_FOR_PROGRAMS  1100
+#define MEM_FOR_PROGRAMS  1024
 #define MAX_CHANNELS    12    // Max is 12
 
-#ifndef DEBUG_PULSE
-#define PERIOD_IN_USECS   20000
-#define MIN_PULSE_WIDTH   600
-#define MAX_PULSE_WIDTH   2400
+#ifdef DEBUG
+  #define PERIOD_IN_USECS   50000
+  #define MIN_PULSE_WIDTH   5000
+  #define MAX_PULSE_WIDTH   15000
 #else
-#define PERIOD_IN_USECS   50000
-#define MIN_PULSE_WIDTH   5000
-#define MAX_PULSE_WIDTH   15000
+  #define PERIOD_IN_USECS   20000
+  #define MIN_PULSE_WIDTH   600
+  #define MAX_PULSE_WIDTH   2400
 #endif
 
-unsigned char programs[MEM_FOR_PROGRAMS] = {
-  22, 0, 53, 0, 80, 0, 155, 0, 182, 0, 200, 0, 227, 0, 245, 0, 16, 1, 34, 1, 75, 1, 240, 255, 242, 0, 255, 255, 255, 1, 0, 3, 255, 255, 255, 255, 240, 0, 242, 255, 255, 255, 255, 1, 255, 3, 0, 255, 255, 255, 254, 1, 255, 240, 0, 242, 255, 255, 255, 241, 255, 243, 0, 255, 255, 240, 255, 242, 0, 255, 255, 241, 0, 243, 255, 255, 255, 254, 2, 255, 48, 80, 49, 239, 34, 0, 51, 40, 255, 48, 120, 241, 31, 2, 0, 51, 80, 255, 48, 159, 33, 0, 50, 40, 51, 120, 255, 48, 199, 1, 0, 50, 80, 51, 159, 255, 48, 239, 49, 40, 50, 120, 51, 199, 255, 240, 31, 49, 80, 50, 159, 51, 239, 255, 32, 0, 49, 120, 50, 199, 243, 31, 255, 0, 0, 49, 159, 50, 239, 35, 0, 255, 254, 3, 255, 240, 255, 242, 0, 255, 255, 241, 255, 243, 0, 255, 255, 240, 255, 242, 255, 255, 255, 241, 0, 243, 255, 255, 255, 254, 4, 255, 0, 128, 1, 128, 2, 128, 3, 128, 255, 255, 255, 255, 255, 255, 255, 254, 0, 255, 240, 0, 242, 0, 255, 255, 241, 255, 243, 0, 255, 255, 240, 0, 242, 255, 255, 255, 241, 0, 243, 255, 255, 255, 254, 6, 255, 112, 255, 1, 80, 2, 255, 255, 255, 113, 240, 255, 0, 0, 255, 255, 254, 7, 255, 240, 0, 242, 255, 255, 255, 241, 0, 243, 255, 255, 255, 240, 255, 242, 0, 255, 255, 241, 255, 243, 0, 255, 255, 254, 8, 255, 112, 0, 1, 80, 2, 0, 255, 255, 113, 240, 255, 0, 255, 255, 255, 254, 9, 255, 112, 113, 114, 113, 255, 112, 140, 113, 64, 114, 140, 115, 172, 255, 112, 113, 114, 113, 255, 112, 140, 114, 140, 255, 112, 113, 113, 172, 114, 113, 115, 64, 255, 112, 140, 114, 140, 255, 254, 10, 255, 112, 113, 113, 64, 255, 113, 172, 255, 112, 140, 113, 64, 255, 113, 172, 255, 254, 11, 255
-};  // Enough size for all the programs (beware of the 2Kb total limit on the ATMega328p)
-unsigned int total_programs = 11;
+unsigned char programs[MEM_FOR_PROGRAMS] = {255};  // Enough size for all the programs (beware of the 2Kb total limit on the ATMega328p)
+unsigned int total_programs = 0;
 unsigned int program_offset = 0;
 unsigned int ticks_per_step = 6;
-unsigned int total_outputs = 4; // Total active channels (up to MAX_CHANNELS)
+unsigned int total_outputs = MAX_CHANNELS;
 boolean uploading = false;
 volatile unsigned int step_tick = 0;
 volatile unsigned int activity[MAX_CHANNELS];
-int delta[MAX_CHANNELS] = {0};                // Keeps delta to add to current_pos until it reaches desired_pos (speed)
-unsigned int desired_pos[MAX_CHANNELS];       // Keeps the desired position for every actuator
-unsigned int min_range[MAX_CHANNELS] = {152, 106, 189, 114, 0, 0, 0, 0, 0, 0, 0, 0};       // Keeps the min range for every channel
-unsigned int max_range[MAX_CHANNELS] = {194, 186, 231, 194, 255, 255, 255, 255, 255, 255, 255, 255};     // Keeps the max range for every channel
-//unsigned int min_range[MAX_CHANNELS] = {152, 111, 190, 109, 0,   0, 0, 0, 0, 0, 0, 0};       // Keeps the min range for every channel
-//unsigned int max_range[MAX_CHANNELS] = {194, 181, 230, 199, 255, 255, 255, 255, 255, 255, 255, 255};     // Keeps the max range for every channel
-unsigned int inverted_channels = 11;          // Each bit keeps if channel must be inverted (bit 0 being channel 0, ...)
-volatile int current_pos[MAX_CHANNELS];       // Keeps the current value for every actuator
-volatile int order[MAX_CHANNELS];             // Keeps the order of every channel
-volatile long elapsed;                        // Keeps the time elapsed in a pulse
+int delta[MAX_CHANNELS] = {0};                    // Keeps delta to add to current_pos until it reaches desired_pos (speed)
+unsigned int desired_pos[MAX_CHANNELS];   // Keeps the desired position for every actuator
+unsigned int min_range[MAX_CHANNELS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};       // Keeps the min range for every channel
+unsigned int max_range[MAX_CHANNELS] = {255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255};     // Keeps the max range for every channel
+unsigned int inverted_channels = 0;               // Each bit keeps if channel must be inverted (bit 0 being channel 0, ...)
+volatile int current_pos[MAX_CHANNELS];           // Keeps the current value for every actuator
+volatile int order[MAX_CHANNELS];                 // Keeps the order of every channel
+volatile long elapsed;                            // Keeps the time elapsed in a pulse
 
 /// --------------------------------------
 /// Control for program execution
@@ -63,6 +59,8 @@ void runProgram (unsigned char num)
 {
   if (num <= total_programs) { // Last program is empty
     program_offset = ((int*)programs)[num - 1]; // Pointer of execution for the program
+    //Serial.print("PC: ");
+    //Serial.println(program_offset, DEC);
   }
 }
 
@@ -80,6 +78,7 @@ void runProgramStep ()
     }
     pos = programs[program_offset + 1];
     extra = programs[program_offset + 2];
+    program_offset += 2; // Commands using 'extra' parameter will increment program_offset if needed
     processCommand(cmd, pos, extra);
   }
 }
@@ -94,6 +93,7 @@ void loadConfiguration (int fromSource = 0)
 {
   unsigned int length, i;
   uploading = true;
+  digitalWrite(13, 1);
 
   // Get configuration length
   if (fromSource) {
@@ -111,20 +111,8 @@ void loadConfiguration (int fromSource = 0)
   }
 
   length = min(length, (fromSource == 2) ? EEPROM.length() : MEM_FOR_PROGRAMS);
-
-  if (fromSource == 2) {
-    EEPROM.update(0, (unsigned char)length & 0xff);
-    delay(15);
-    EEPROM.update(1, (unsigned char)length >> 8);
-    for (i = 0; i < length; i++) {
-      delay(15);
-      while (Serial.available() < 1);
-      EEPROM.update(2 + i, (unsigned char)Serial.read());
-    }
-    uploading = 0;
-    return;
-  }
-
+  //Serial.print("Length of the code: ");
+  //Serial.println(length);
   // Get total_programs
   if (fromSource) {
     while (Serial.available() < 1);
@@ -140,14 +128,44 @@ void loadConfiguration (int fromSource = 0)
   } else {
     ticks_per_step = EEPROM[3];
   }
+
+  if (fromSource == 2) {
+    EEPROM.update(0, (unsigned char)(length & 0xff));
+    EEPROM.update(1, (unsigned char)(length >> 8));
+    EEPROM.update(2, (unsigned int)total_programs);
+    EEPROM.update(3, (unsigned int)ticks_per_step);
+  }
+  
   total_outputs = (ticks_per_step & 15) + 1;
   ticks_per_step = (ticks_per_step >> 4) + 1;
+
+  if (fromSource == 2) {
+    for (i = 0; i < 2 + length + (total_outputs << 1); i++) {
+      while (Serial.available() < 1);
+      EEPROM.update(4 + i, (unsigned char)Serial.read());
+      
+      // Check if value written is the same as expected
+      /*if (i >= (6 + (total_outputs << 1)) && EEPROM[4+i] != programs[i-(6 + (total_outputs << 1))]) {
+        for (int j=0; j< i; j++) {
+          digitalWrite(13, 0);
+          delay(200);
+          digitalWrite(13, 1);
+          delay(200);
+        }
+        return;
+      }
+      */
+    }
+    uploading = false;
+    digitalWrite(13, 0);
+    return;
+  }
 
   // Get ranges for every active channel
   for (i = 0; i < total_outputs; i++) {
     if (fromSource) {
       while (Serial.available() < 2);
-#ifndef DEBUG_PULSE
+#ifndef DEBUG
       min_range[i] = map((long)Serial.read(), 0, 255, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
       max_range[i] = map((long)Serial.read(), 0, 255, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
 #else
@@ -155,9 +173,9 @@ void loadConfiguration (int fromSource = 0)
       max_range[i] = MAX_PULSE_WIDTH; Serial.read();
 #endif
     } else {
-#ifndef DEBUG_PULSE
-      min_range[i] = map((long)EEPROM[(i << 2) + 4], 0, 255, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
-      max_range[i] = map((long)EEPROM[(i << 2) + 5], 0, 255, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+#ifndef DEBUG
+      min_range[i] = map((long)EEPROM[(i << 1) + 4], 0, 255, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
+      max_range[i] = map((long)EEPROM[(i << 1) + 5], 0, 255, MIN_PULSE_WIDTH, MAX_PULSE_WIDTH);
 #else
       min_range[i] = MIN_PULSE_WIDTH;
       max_range[i] = MAX_PULSE_WIDTH;
@@ -175,20 +193,20 @@ void loadConfiguration (int fromSource = 0)
     inverted_channels |= Serial.read() << 8;
   } else {
     // Get inverted_channels array (lower byte)
-    inverted_channels = EEPROM[(total_outputs << 1) + 6];
+    inverted_channels = EEPROM[(total_outputs << 1) + 4];
     // Get inverted_channels array (high byte)
-    inverted_channels |= EEPROM[(total_outputs << 1) + 7] << 8;
+    inverted_channels |= EEPROM[(total_outputs << 1) + 5] << 8;
   }
-
   // Get program offsets and code
   for (i = 0; i < length; i++) {
     if (fromSource) {
       while (Serial.available() < 1);
       programs[i] = Serial.read();
     } else {
-      programs[i] = EEPROM[(total_outputs << 1) + 8];
+      programs[i] = EEPROM[i + (total_outputs << 1) + 6];
     }
   }
+  digitalWrite(13, 0);
   uploading = false;
 }
 
@@ -200,7 +218,6 @@ void processCommand (unsigned int cmd, unsigned int pos, int extra)
   if (uploading) {
     return;
   }
-  program_offset += 2; // Commands using 'extra' parameter will increment program_offset if needed
 
   // Look if the command is control or misc or other
   if (cmd == 253) {         // Jump, branching and delay commands
@@ -209,36 +226,35 @@ void processCommand (unsigned int cmd, unsigned int pos, int extra)
       delay(1000 * extra);
     } else if (pos == 2) {      // Jump by offset (jump N)
       program_offset++;
-      program_offset += extra;
+      program_offset += (extra - 128);
     } else if (pos == 3) {      // Jump if A0 has bigger value than A1 (jleft N)
       program_offset++;
       int tmp = analogRead(0);
       delay(15);
       if (tmp > analogRead(1)) {
-        program_offset += extra;
+        program_offset += (extra - 128);
       }
     } else if (pos == 4) {      // Jump if A1 has bigger value than A0 (jright N)
       program_offset++;
       int tmp = analogRead(1);
       delay(15);
       if (tmp > analogRead(0)) {
-        program_offset += extra;
+        program_offset += (extra - 128);
       }
     } else if (pos == 5) {      // Jump randomly in a 50% probability (jrand N)
       program_offset++;
       if (random(100) >= 50) {
-        program_offset += extra;
+        program_offset += (extra - 128);
       }
     }
-
+    return;
   } else if (cmd == 254) {  // Program control command
     if (pos == 0) {
       stopProgram();
-      return;
     } else {
       runProgram(pos);
-      return;
     }
+    return;
   } else if (cmd == 255) {  // Misc commands (cannot be included in programs)
     if (pos == 0) {             // Get channels' current positions to the Serial
       Serial.write(total_outputs);
@@ -259,7 +275,6 @@ void processCommand (unsigned int cmd, unsigned int pos, int extra)
       loadConfiguration(1);
     }
     Serial.flush();
-
     return;
   }
 
@@ -276,6 +291,7 @@ void processCommand (unsigned int cmd, unsigned int pos, int extra)
   if (inverted_channels & (1 << channel)) {
     pos = 255 - pos;
   }
+
   // Ranges are always given from 0-255, independently of the range configured for the channel
   desired_pos[channel] = (int)map(pos, 0, 255, min_range[channel], max_range[channel]);
 
@@ -299,7 +315,7 @@ void setPositionIsr()
   total_active = 0;
   for (i = 0; i < total_outputs; i++) {
     if (activity[i]) {
-#ifndef DEBUG_PULSE
+#ifndef DEBUG
       activity[i]--;
 #endif
       order[total_active] = i;
@@ -379,24 +395,102 @@ void setPositionIsr()
 /// --------------------------------------------
 void setup()
 {
-  // Load configuration from EEPROM
-  loadConfiguration(0);
+  Serial.begin(57600);       // opens serial port, sets data rate 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, or 115200
 
   DDRD = 0xFC;              // direction variable for port D - make em all outputs except serial pins 0 & 1
   DDRB = 0xFF;              // direction variable for port B - all outputs
 
-  Serial.begin(57600);       // opens serial port, sets data rate 300, 600, 1200, 2400, 4800, 9600, 14400, 19200, 28800, 38400, 57600, or 115200
-  for (int it = 0; it < 400; it++) {
+#ifdef DEBUG
+  for (int it = 0+14; it < 320+14; it++) {
     Serial.print(EEPROM[it], DEC);
     Serial.print(",");
   }
+  Serial.println("");
+  for (int it = 0; it < 320; it++) {
+    Serial.print(programs[it], DEC);
+    Serial.print(",");
+  }
+  Serial.println("");
+  for (int it = 0; it < MAX_CHANNELS; it++) {
+    Serial.print(min_range[it], DEC);
+    Serial.print("-");
+    Serial.print(max_range[it], DEC);
+    Serial.print(",");
+  }
+  Serial.println("");
+  Serial.print("Total programs: ");
+  Serial.println(total_programs, DEC);
+  Serial.print("Program offset: ");
+  Serial.println(program_offset, DEC);
+  Serial.print("Total outputs: ");
+  Serial.println(total_outputs, DEC);
+  Serial.print("Inverted channels: ");
+  Serial.println(inverted_channels, DEC);
+  Serial.print("Uploading: ");
+  Serial.println(uploading, DEC);
+  //while (Serial.available()) Serial.read();
+
+  unsigned int chksum = 0;
+  for (int i=0; i < 360; i++) {
+    chksum+=(unsigned char)programs[i];
+  }
+  Serial.print("First: ");
+  Serial.println(chksum, DEC);
+
+#endif
+
+  // Load configuration from EEPROM
+  loadConfiguration(0);
+
+  for (int i=0; i< MAX_CHANNELS; i++) {
+    desired_pos[i] = (min_range[i] + max_range[i]) >> 1;
+    current_pos[i] = desired_pos[i];
+  }
+
+#ifdef DEBUG
+  for (int it = 0+14; it < 320 + 14; it++) {
+    Serial.print(EEPROM[it], DEC);
+    Serial.print(",");
+  }
+  Serial.println("");
+  for (int it = 0; it < 320; it++) {
+    Serial.print(programs[it], DEC);
+    Serial.print(",");
+  }
+  Serial.println("");
+  for (int it = 0; it < MAX_CHANNELS; it++) {
+    Serial.print(min_range[it], DEC);
+    Serial.print("-");
+    Serial.print(max_range[it], DEC);
+    Serial.print(",");
+  }
+  Serial.println("");
+  Serial.print("Total programs: ");
+  Serial.println(total_programs, DEC);
+  Serial.print("Program offset: ");
+  Serial.println(program_offset, DEC);
+  Serial.print("Total outputs: ");
+  Serial.println(total_outputs, DEC);
+  Serial.print("Inverted channels: ");
+  Serial.println(inverted_channels, DEC);
+  Serial.print("Uploading: ");
+  Serial.println(uploading, DEC);
+  //while (Serial.available()) Serial.read();
+  chksum = 0;
+  for (int i=0; i < 360; i++) {
+    chksum+=(unsigned char)programs[i];
+  }
+  Serial.print("Second: ");
+  Serial.print(chksum, DEC);
+#endif
 
   Timer1.initialize(PERIOD_IN_USECS);  // set a timer of length in microseconds
   Timer1.attachInterrupt( setPositionIsr ); // attach the service to control positions
 
 #ifdef USE_I2C_COMMUNICATION
   Wire.begin();    // join i2c bus
-#endif
+#endif  
+
 }
 
 /// --------------------------------------
@@ -408,7 +502,6 @@ void loop() {
   unsigned int pos = 0;        // Keeps latest position received
 
   if (uploading) return;
-
 #ifdef USE_I2C_COMMUNICATION
   processNunchuckKeys();
 #endif
@@ -441,7 +534,6 @@ void processNunchuckKeys()
       cnt++;
     }
 
-    //Serial.println(cnt);
     // If we received the NUNCHUCK_READ_LENGTH bytes, check for key presses
     if (cnt == NUNCHUCK_READ_LENGTH && outbuf[0] == 160 && outbuf[1] == 32 && outbuf[2] == 16 && outbuf[3] == 0 && outbuf[4] + outbuf[5] > 255)
     {
