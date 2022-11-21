@@ -1,6 +1,9 @@
-Q255s8 W80 A255
+Q0 A0 W0 S0
 
-W240s8
-Q0
 
-restart
+
+
+W255s16 S255s16 Q255s16 A255s16
+
+
+run5

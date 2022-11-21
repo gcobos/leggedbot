@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from gevent import monkey
 monkey.patch_all()
@@ -10,7 +10,7 @@ import io
 import struct
 import cv2
 import numpy as np
-from processor import Processor, CONFIG_DEFAULT_THRESHOLD, CONFIG_DEFAULT_MINAREA
+from .processor import Processor, CONFIG_DEFAULT_THRESHOLD, CONFIG_DEFAULT_MINAREA
 
 class Tracker(object):
 
@@ -157,7 +157,7 @@ class Tracker(object):
                 # length is zero, quit the loop
                 image_len = struct.unpack('<L', self.connection.read(struct.calcsize('<L')))[0]
                 if not image_len:
-                    print "No image!"
+                    print("No image!")
                     self.running = False
                     break
                 # Construct a stream to hold the image data and read the image
@@ -221,7 +221,7 @@ class Tracker(object):
                 if ch == 27:
                     self.running = False
             else:
-                print "FPS: %s" % str(int(1000*self._frames/(time()-self._time))/1000.0)
+                print("FPS: %s" % str(int(1000*self._frames/(time()-self._time))/1000.0))
         finally:
             self._ready_to_track = True        
 

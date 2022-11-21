@@ -8,26 +8,26 @@
 
 //#define DEBUG                   // Makes easier to debug servo pulses with an oscilloscope. Do NOT connect servos when debugging
 
-//#define USE_I2C_COMMUNICATION           // Uncomment this to use NUNCHUCK, SNES WIRELESS PAD, etc. Do not enable it unless you have the receiver installed
+// #define USE_I2C_COMMUNICATION           // Uncomment this to use NUNCHUCK, SNES WIRELESS PAD, etc. Do not enable it unless you have the receiver installed
 
 #ifdef USE_I2C_COMMUNICATION
 #include <Wire.h>
 
 #define NUNCHUCK_DEVICE_ADDRESS 0x52
-#define NUNCHUCK_READ_LENGTH 6
+#define NUNCHUCK_READ_LENGTH 8
 #endif
 
 #define MEM_FOR_PROGRAMS  1024
 #define MAX_CHANNELS    12    // Max is 12
 
 #ifdef DEBUG
-  #define PERIOD_IN_USECS   50000
-  #define MIN_PULSE_WIDTH   5000
-  #define MAX_PULSE_WIDTH   15000
+#define PERIOD_IN_USECS   50000
+#define MIN_PULSE_WIDTH   5000
+#define MAX_PULSE_WIDTH   15000
 #else
-  #define PERIOD_IN_USECS   20000
-  #define MIN_PULSE_WIDTH   600
-  #define MAX_PULSE_WIDTH   2400
+#define PERIOD_IN_USECS   20000
+#define MIN_PULSE_WIDTH   600
+#define MAX_PULSE_WIDTH   2400
 #endif
 
 unsigned char programs[MEM_FOR_PROGRAMS] = {255};  // Enough size for all the programs (beware of the 2Kb total limit on the ATMega328p)
@@ -135,7 +135,7 @@ void loadConfiguration (int fromSource = 0)
     EEPROM.update(2, (unsigned int)total_programs);
     EEPROM.update(3, (unsigned int)ticks_per_step);
   }
-  
+
   total_outputs = (ticks_per_step & 15) + 1;
   ticks_per_step = (ticks_per_step >> 4) + 1;
 
@@ -143,7 +143,7 @@ void loadConfiguration (int fromSource = 0)
     for (i = 0; i < 2 + length + (total_outputs << 1); i++) {
       while (Serial.available() < 1);
       EEPROM.update(4 + i, (unsigned char)Serial.read());
-      
+
       // Check if value written is the same as expected
       /*if (i >= (6 + (total_outputs << 1)) && EEPROM[4+i] != programs[i-(6 + (total_outputs << 1))]) {
         for (int j=0; j< i; j++) {
@@ -153,7 +153,7 @@ void loadConfiguration (int fromSource = 0)
           delay(200);
         }
         return;
-      }
+        }
       */
     }
     uploading = false;
@@ -401,7 +401,7 @@ void setup()
   DDRB = 0xFF;              // direction variable for port B - all outputs
 
 #ifdef DEBUG
-  for (int it = 0+14; it < 320+14; it++) {
+  for (int it = 0 + 14; it < 320 + 14; it++) {
     Serial.print(EEPROM[it], DEC);
     Serial.print(",");
   }
@@ -431,8 +431,8 @@ void setup()
   //while (Serial.available()) Serial.read();
 
   unsigned int chksum = 0;
-  for (int i=0; i < 360; i++) {
-    chksum+=(unsigned char)programs[i];
+  for (int i = 0; i < 360; i++) {
+    chksum += (unsigned char)programs[i];
   }
   Serial.print("First: ");
   Serial.println(chksum, DEC);
@@ -442,13 +442,13 @@ void setup()
   // Load configuration from EEPROM
   loadConfiguration(0);
 
-  for (int i=0; i< MAX_CHANNELS; i++) {
+  for (int i = 0; i < MAX_CHANNELS; i++) {
     desired_pos[i] = (min_range[i] + max_range[i]) >> 1;
     current_pos[i] = desired_pos[i];
   }
 
 #ifdef DEBUG
-  for (int it = 0+14; it < 320 + 14; it++) {
+  for (int it = 0 + 14; it < 320 + 14; it++) {
     Serial.print(EEPROM[it], DEC);
     Serial.print(",");
   }
@@ -477,8 +477,8 @@ void setup()
   Serial.println(uploading, DEC);
   //while (Serial.available()) Serial.read();
   chksum = 0;
-  for (int i=0; i < 360; i++) {
-    chksum+=(unsigned char)programs[i];
+  for (int i = 0; i < 360; i++) {
+    chksum += (unsigned char)programs[i];
   }
   Serial.print("Second: ");
   Serial.print(chksum, DEC);
@@ -489,7 +489,16 @@ void setup()
 
 #ifdef USE_I2C_COMMUNICATION
   Wire.begin();    // join i2c bus
-#endif  
+  Wire.beginTransmission(0x52);  // transmit to device 0x52
+  Wire.write (0xF0);
+  Wire.write (0x55);
+  Wire.endTransmission(); // stop transmitting
+  Wire.beginTransmission(0x52);  // transmit to device 0x52
+  Wire.write (0xFB);
+  Wire.write (0x00);
+  Wire.endTransmission();  // stop transmitting
+  delay(10);
+#endif
 
 }
 
@@ -520,7 +529,7 @@ void loop() {
 }
 
 #ifdef USE_I2C_COMMUNICATION
-bool KEY_UP, KEY_RIGHT, KEY_LEFT, KEY_DOWN, KEY_SELECT, KEY_START, KEY_A, KEY_B;
+bool KEY_UP, KEY_RIGHT, KEY_LEFT, KEY_DOWN, KEY_SELECT, KEY_START, KEY_A, KEY_B, KEY_X, KEY_Y, KEY_L_SHOULDER, KEY_R_SHOULDER;
 int cnt = 0;
 uint8_t outbuf[NUNCHUCK_READ_LENGTH];    // array to store arduino output
 
@@ -530,43 +539,47 @@ void processNunchuckKeys()
     Wire.requestFrom(NUNCHUCK_DEVICE_ADDRESS, NUNCHUCK_READ_LENGTH, true); // request data from nunchuck
     while (Wire.available())
     {
-      outbuf[cnt] = nunchuk_decode_byte(Wire.read());  // receive byte as an integer
+      outbuf[cnt] = Wire.read();  // receive byte as an integer
       cnt++;
     }
+    delay(10);
+    Wire.beginTransmission(NUNCHUCK_DEVICE_ADDRESS); // transmit to device 0x52
+    Wire.write (0x00);    // sends one byte
+    Wire.endTransmission(); // stop transmitting
 
     // If we received the NUNCHUCK_READ_LENGTH bytes, check for key presses
-    if (cnt == NUNCHUCK_READ_LENGTH && outbuf[0] == 160 && outbuf[1] == 32 && outbuf[2] == 16 && outbuf[3] == 0 && outbuf[4] + outbuf[5] > 255)
+    if (cnt == NUNCHUCK_READ_LENGTH) // && outbuf[0] == 131 && outbuf[1] == 133 && outbuf[2] == 133 && outbuf[3] == 133)
     {
       // Get key presses
-      KEY_UP = ~outbuf[5] & 1;
-      KEY_RIGHT = ~outbuf[4] & 128;
-      KEY_LEFT = ~outbuf[5] & 2;
-      KEY_DOWN = ~outbuf[4] & 64;
-      KEY_SELECT = ~outbuf[4] & 16;
-      KEY_START = ~outbuf[4] & 4;
-      KEY_A = ~outbuf[5] & 16;
-      KEY_B = ~outbuf[5] & 64;
+      KEY_UP = ~outbuf[7] & 1;
+      KEY_RIGHT = ~outbuf[6] & 128;
+      KEY_LEFT = ~outbuf[7] & 2;
+      KEY_DOWN = ~outbuf[6] & 64;
+      KEY_SELECT = ~outbuf[6] & 16;
+      KEY_START = ~outbuf[6] & 4;
+      KEY_A = ~outbuf[7] & 16;
+      KEY_B = ~outbuf[7] & 64;
+      KEY_X = ~outbuf[7] & 8;
+      KEY_Y = ~outbuf[7] & 32;
+      KEY_L_SHOULDER = outbuf[4] & 128;
+      KEY_R_SHOULDER = outbuf[5] & 128;
 
-      digitalWrite (13, KEY_UP || KEY_RIGHT || KEY_LEFT || KEY_DOWN || KEY_SELECT || KEY_START || KEY_A || KEY_B);  // sets the LED on
+      digitalWrite (13, KEY_UP || KEY_RIGHT || KEY_LEFT || KEY_DOWN || KEY_SELECT || KEY_START || KEY_A || KEY_B || KEY_X || KEY_Y || KEY_L_SHOULDER || KEY_R_SHOULDER); // sets the LED on
       if (KEY_UP) processCommand(254, 2, 0);
       if (KEY_DOWN) processCommand(254, 8, 0);
       if (KEY_LEFT) processCommand(254, 4, 0);
       if (KEY_RIGHT) processCommand(254, 6, 0);
-      if (KEY_SELECT) processCommand(254, 10, 0);
       if (KEY_START) processCommand(254, 5, 0);
-      if (KEY_B) processCommand(254, 7, 0);
+      if (KEY_SELECT) processCommand(254, 1, 0);
       if (KEY_A) processCommand(254, 3, 0);
+      if (KEY_B) processCommand(254, 7, 0);
+      if (KEY_X) processCommand(254, 9, 0);
+      if (KEY_Y) processCommand(254, 10, 0);
+      if (KEY_L_SHOULDER) processCommand(254, 11, 0);
+      if (KEY_R_SHOULDER) processCommand(254, 12, 0);
     }
   }
   cnt = ++cnt % 1000;
 }
 
-// Encode data to format that most wiimote drivers except
-// only needed if you use one of the regular wiimote drivers
-char
-nunchuk_decode_byte (char x)
-{
-  x = (x ^ 0x17) + 0x17;
-  return x;
-}
 #endif    // USE_I2C_COMMUNICATION

@@ -47,7 +47,7 @@ class RobotConnection(object):
 	def recv (self, length = None, timeout = 2.0):
 		result = []
 		try:
-			print("Receiving...")
+			#print("Receiving...")
 			with Timeout(timeout):
 				self.read_lock = True
 				# Get response if any

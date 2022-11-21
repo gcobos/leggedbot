@@ -25,7 +25,7 @@ fig.show()
 def update ():
     num=0
     while running:
-        #print(tetra3.get_sensors())
+        print(tetra3.get_sensors())
         for i, y in enumerate(tetra3.get_sensors()):
             plt.scatter(num, y, marker=markers[i])
         fig.canvas.draw()

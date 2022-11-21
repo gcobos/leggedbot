@@ -1,10 +1,11 @@
 leggedbot
 ========
 
+Construction of a legged robot controller, using arduino (16Mhz needed).
+
 Instructions, code and tests to build a legged robot
 
 Abstract: 
-Construction of a legged robot controller, using arduino (16Mhz needed).
 
 Interface:
 It uses up to 12 channels (pins 2-13), and pins 1 and 2 to control the movements using serial communication.
@@ -23,7 +24,7 @@ Second byte sets position to reach by the selected leg.
 
 Special commands:
 
-There are two special commands, by specifying actuator (beyond 11). So there are a few values that are going to be special:
+There are three special commands, by specifying actuator (beyond 11). So there are a few values that are going to be special:
 
 - 253 for branching and delay commands
 	* 253 + 1 + delay	= sleep for `delay` seconds (sleep N)

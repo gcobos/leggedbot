@@ -3,42 +3,51 @@
 from robot import Robot
 from gevent import sleep
 
-tetra = Robot('tetra')
+tetra = Robot('tetra3')
 sleep(0)
 
 tetra.load_config()
 
 # Load programs
-for i in range(9):
+for i in range(12):
     tetra.load(i+1)
 tetra.upload_programs()
 sleep(3)
 
+GO_FORWARD = 2
+TURN_LEFT = 4
+STANDING = 5 
+TURN_RIGHT = 6
+
 print("Searching for light...")
-threshold = 2
+threshold = 1
+program = STANDING
 try:
     while True:
         eyes = tetra.get_sensors()
         sleep(0.3)
-        diff = eyes[0] - eyes[1]*0.9
+        diff = eyes[0] - eyes[1]
         print(diff)
-        #continue
+
         if diff > threshold:
-            print("Move right")
-            tetra.run(6)
-            sleep(3)
+            print("Turn right")
+            program = TURN_RIGHT
         elif diff < -threshold:
-            print("Move left")
-            tetra.run(4)
-            sleep(3)
-        elif abs(diff) < threshold*0.3:
-            tetra.run(2)
-            sleep(2)
-        else:
-            tetra.run(5)
-            sleep(3)
-        
-except:
-    print("Stopping...")
+            print("Turn left")
+            program = TURN_LEFT
+        elif abs(diff) < threshold:
+            print("Go forward")
+            program = GO_FORWARD
+        else:		# When abs(diff) == threshold
+            print("Rest a bit")
+            if program == STANDING:
+                sleep(2)
+                continue
+            program = STANDING
+
+        tetra.run(program)
+        sleep(2)
+except Exception as e:
+    print("Stopping...", e)
     tetra.run(5)
     sleep(2)

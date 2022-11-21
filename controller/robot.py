@@ -178,11 +178,11 @@ class Robot(object):
 									self._positions = self._conn.recv()
 								elif subcmd == 1:         # READ SENSORS
 									self._conn.send(cmd, subcmd)
-									print('Sent', cmd, subcmd)
+									#print('Sent', cmd, subcmd)
 									self._sensors = self._conn.recv()
 								elif subcmd in (253, 254, 255):       # UPLOAD CONFIGURATION
 									# Writes all the programs and configuration at once
-									print("Writing programs to the robot")
+									#print("Writing programs to the robot")
 									#print(pos)
 									self._conn.send(cmd, params, flush=1)
 									print("Done")

@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import sys, glob
 import cv2
@@ -225,7 +225,7 @@ class Processor(object):
         #self.camera = cv2.VideoCapture(self.source)
 
         for i in glob.glob('patterns/tag-[a-z]*.pgm'):
-            print "Load", i
+            print("Load", i)
             pattern = cv2.cvtColor(cv2.imread(i), cv2.COLOR_BGR2GRAY)
             self.patterns[i] = pattern
             for transposed in range(1,4):

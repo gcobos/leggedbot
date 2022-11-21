@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import io
 import socket
@@ -39,7 +39,7 @@ try:
         i = 0
         for foo in camera.capture_continuous(stream, 'bgr', use_video_port = True):
             t1 = time.time()
-            print "FPS:", i / (t1-t0)
+            print("FPS:", i / (t1-t0))
             i+=1
             image = np.fromstring(stream.getvalue(), dtype=np.uint8, count = WIDTH*HEIGHT*3)
             image.shape=(HEIGHT,WIDTH,3)
