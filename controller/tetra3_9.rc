@@ -1,6 +1,7 @@
-Q0s8 W80 A0
+Q0s16 A255s16
 
-W240s8
-Q255
+
+Q255s16 A0s16
+
 
 restart

@@ -87,7 +87,7 @@ class RobotConnection(object):
 					chunk = data[start:start + 32]
 					#print("sending chunk:", chunk)
 					self._conn.write(chunk)
-					sleep(0.2)
+					sleep(0.1)
 				if flush:
 					self._conn.flush()
 				sleep(0.01)

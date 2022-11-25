@@ -100,9 +100,9 @@ class RobotProgram(object):
 				self._code[program] = code
 				break
 		if loop:
-			self.set_command(program, steps, 254, program)
+			self.set_command(program, steps, RobotProgram.CONTROL_COMMAND, program)
 		else:
-			self.set_command(program, steps, 254, 0)
+			self.set_command(program, steps, RobotProgram.CONTROL_COMMAND, 0)
 					   
 	def set_program_source_code (self, program, program_code=''):
 		self._ensure_program(program)
@@ -123,27 +123,27 @@ class RobotProgram(object):
 				for j in channels_str.split():
 					if j.startswith('sleep'):
 						pr = int(j[5:])
-						self.set_command(program, step, 253, 1, pr)
+						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 0, pr)
 					elif j.startswith('jump'):
 						pr = int(j[4:])
-						self.set_command(program, step, 253, 2, pr)
+						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 1, pr)
 					elif j.startswith('jleft'):
 						pr = int(j[5:])
-						self.set_command(program, step, 253, 3, pr)
+						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 2, pr)
 					elif j.startswith('jright'):
 						pr = int(j[6:])
-						self.set_command(program, step, 253, 4, pr)
+						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 3, pr)
 					elif j.startswith('jrand'):
 						pr = int(j[5:])
-						self.set_command(program, step, 253, 5, pr)
+						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 4, pr)
 					elif j.startswith('stop'):
-						self.set_command(program, step, 254, 0)
+						self.set_command(program, step, RobotProgram.CONTROL_COMMAND, 0)
 					elif j.startswith('run'):
 						pr = int(j[3:])
-						self.set_command(program, step, 254, pr)
+						self.set_command(program, step, RobotProgram.CONTROL_COMMAND, pr)
 					elif j.startswith('restart'):
 						pr = program
-						self.set_command(program, step, 254, pr)
+						self.set_command(program, step, RobotProgram.CONTROL_COMMAND, pr)
 					elif j[:1].upper() in self.all_channels:
 						channel = self.all_channels.index(j[:1].upper())
 						m = re.split("(\d{0,3})(:?s\d{1,2})?(:?m\d)?", j[1:], 0, re.IGNORECASE)
@@ -184,15 +184,15 @@ class RobotProgram(object):
 			cmdnum = 240 + channel
 			# print("Channel?", channel, "Command?", command, "Command num?", cmdnum)
 			if cmdnum == RobotProgram.OTHER_COMMAND:
-				if command.get('v', 0)==1:
+				if command.get('v', 0)==0:
 					src = 'sleep{:d}'.format(command.get('e', 0))	
-				elif command.get('v', 0)==2:
+				elif command.get('v', 0)==1:
 					src = 'jump{:d}'.format(command.get('e', 0))	
-				elif command.get('v', 0)==3:
+				elif command.get('v', 0)==2:
 					src = 'jleft{:d}'.format(command.get('e', 0))	
-				elif command.get('v', 0)==4:
+				elif command.get('v', 0)==3:
 					src = 'jright{:d}'.format(command.get('e', 0))	
-				elif command.get('v', 0)==5:
+				elif command.get('v', 0)==4:
 					src = 'jrand{:d}'.format(command.get('e', 0))
 				else:
 					raise ValueError("Unknown command "+str(
@@ -228,9 +228,14 @@ class RobotProgram(object):
 						channels_lut[channel] if channel in channels_lut else channel,
 						command['s'],
 						command.get('m', 0))
-					commands.extend((cmd, command['v']))
-					if cmd == RobotProgram.OTHER_COMMAND and command['v'] in (2, 3, 4, 5):
-						commands.append(128 + command.get('e', 0)) # convert to unsigned
+					if cmd == RobotProgram.OTHER_COMMAND:
+						v = command.get('e', 0) & 0b11111
+						if command['v'] in (1, 2, 3, 4):	 # convert parameter to unsigned
+							v += 16
+						v += command['v'] << 5
+					else:
+						v = command['v']
+					commands.extend((cmd, v))
 			if commands:
 				raw_code.extend(commands)
 			#if channel < len(self.all_channels):

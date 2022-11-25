@@ -2,13 +2,12 @@
   author: Gonzalo Cobos Bergillos
   email: gcobos@gmail.com
 **********************************************************/
-
 #include <TimerOne.h>
 #include <EEPROM.h>
 
 //#define DEBUG                   // Makes easier to debug servo pulses with an oscilloscope. Do NOT connect servos when debugging
 
-// #define USE_I2C_COMMUNICATION           // Uncomment this to use NUNCHUCK, SNES WIRELESS PAD, etc. Do not enable it unless you have the receiver installed
+#define USE_I2C_COMMUNICATION           // Uncomment this to use NUNCHUCK, SNES WIRELESS PAD, etc. Do not enable it unless you have the receiver installed
 
 #ifdef USE_I2C_COMMUNICATION
 #include <Wire.h>
@@ -32,16 +31,16 @@
 
 unsigned char programs[MEM_FOR_PROGRAMS] = {255};  // Enough size for all the programs (beware of the 2Kb total limit on the ATMega328p)
 unsigned int total_programs = 0;
-unsigned int program_offset = 0;
+volatile unsigned int program_offset = 0;
 unsigned int ticks_per_step = 6;
 unsigned int total_outputs = MAX_CHANNELS;
-boolean uploading = false;
+volatile boolean uploading = false;
 volatile unsigned int step_tick = 0;
 volatile unsigned int activity[MAX_CHANNELS];
 int delta[MAX_CHANNELS] = {0};                    // Keeps delta to add to current_pos until it reaches desired_pos (speed)
 unsigned int desired_pos[MAX_CHANNELS];   // Keeps the desired position for every actuator
-unsigned int min_range[MAX_CHANNELS] = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};       // Keeps the min range for every channel
-unsigned int max_range[MAX_CHANNELS] = {255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255, 255};     // Keeps the max range for every channel
+unsigned int min_range[MAX_CHANNELS] = {0};       // Keeps the min range for every channel
+unsigned int max_range[MAX_CHANNELS] = {255};     // Keeps the max range for every channel
 unsigned int inverted_channels = 0;               // Each bit keeps if channel must be inverted (bit 0 being channel 0, ...)
 volatile int current_pos[MAX_CHANNELS];           // Keeps the current value for every actuator
 volatile int order[MAX_CHANNELS];                 // Keeps the order of every channel
@@ -59,8 +58,6 @@ void runProgram (unsigned char num)
 {
   if (num <= total_programs) { // Last program is empty
     program_offset = ((int*)programs)[num - 1]; // Pointer of execution for the program
-    //Serial.print("PC: ");
-    //Serial.println(program_offset, DEC);
   }
 }
 
@@ -68,7 +65,6 @@ void runProgramStep ()
 {
   int cmd = 0;        // Keeps latest command read
   int pos = 0;        // Keeps latest position read
-  int extra = 0;      // Extra parameters for some commands
 
   while (program_offset) {
     cmd = programs[program_offset];
@@ -77,9 +73,8 @@ void runProgramStep ()
       break;
     }
     pos = programs[program_offset + 1];
-    extra = programs[program_offset + 2];
-    program_offset += 2; // Commands using 'extra' parameter will increment program_offset if needed
-    processCommand(cmd, pos, extra);
+    program_offset += 2;
+    processCommand(cmd, pos);
   }
 }
 
@@ -143,18 +138,6 @@ void loadConfiguration (int fromSource = 0)
     for (i = 0; i < 2 + length + (total_outputs << 1); i++) {
       while (Serial.available() < 1);
       EEPROM.update(4 + i, (unsigned char)Serial.read());
-
-      // Check if value written is the same as expected
-      /*if (i >= (6 + (total_outputs << 1)) && EEPROM[4+i] != programs[i-(6 + (total_outputs << 1))]) {
-        for (int j=0; j< i; j++) {
-          digitalWrite(13, 0);
-          delay(200);
-          digitalWrite(13, 1);
-          delay(200);
-        }
-        return;
-        }
-      */
     }
     uploading = false;
     digitalWrite(13, 0);
@@ -211,40 +194,56 @@ void loadConfiguration (int fromSource = 0)
 }
 
 /// -----------------------------------------------------
+/// Move program_offset by a number of lines (positive or negative)
+/// -----------------------------------------------------
+void moveProgramOffset (int lines)
+{
+  int inc, lc, c;
+  inc = (lines >= 0) ? 1 : -1;
+  lc = 0;
+  while (abs(lc) < abs(lines)) {
+    c = programs[program_offset];
+    if (c == 255) {
+      lc += inc;
+      program_offset += inc;      // Program tick (line separator)
+    } else {
+      program_offset += 2 * inc;  // Any other command takes 2 bytes
+    }
+  }
+}
+
+/// -----------------------------------------------------
 /// Process a command and sets the new position to reach
 /// -----------------------------------------------------
-void processCommand (unsigned int cmd, unsigned int pos, int extra)
+void processCommand (unsigned int cmd, unsigned int pos)
 {
   if (uploading) {
     return;
   }
 
   // Look if the command is control or misc or other
-  if (cmd == 253) {         // Jump, branching and delay commands
-    if (pos == 1) {             // Sleep for a number of seconds (sleep N)
-      program_offset++;
-      delay(1000 * extra);
-    } else if (pos == 2) {      // Jump by offset (jump N)
-      program_offset++;
-      program_offset += (extra - 128);
-    } else if (pos == 3) {      // Jump if A0 has bigger value than A1 (jleft N)
-      program_offset++;
+  if (cmd == 253) {             // Jump, branching and delay commands
+    int subcmd = pos >> 5;
+    pos = pos & 31;
+    if (subcmd == 0) {             // Sleep for a number of seconds (sleep N)
+      delay(1000 * pos);
+    } else if (subcmd == 1) {      // Jump by a number of lines (jump N, -16..15)
+      moveProgramOffset(pos - 16);
+    } else if (subcmd == 2) {      // Jump if A0 has bigger value than A1 (jleft N)
       int tmp = analogRead(0);
-      delay(15);
+      delayMicroseconds(15000);
       if (tmp > analogRead(1)) {
-        program_offset += (extra - 128);
+        moveProgramOffset(pos - 16);
       }
-    } else if (pos == 4) {      // Jump if A1 has bigger value than A0 (jright N)
-      program_offset++;
+    } else if (subcmd == 3) {      // Jump if A1 has bigger value than A0 (jright N)
       int tmp = analogRead(1);
-      delay(15);
+      delayMicroseconds(15000);
       if (tmp > analogRead(0)) {
-        program_offset += (extra - 128);
+        moveProgramOffset(pos - 16);
       }
-    } else if (pos == 5) {      // Jump randomly in a 50% probability (jrand N)
-      program_offset++;
+    } else if (subcmd == 4) {      // Jump randomly in a 50% probability (jrand N)
       if (random(100) >= 50) {
-        program_offset += (extra - 128);
+        moveProgramOffset(pos - 16);
       }
     }
     return;
@@ -265,7 +264,7 @@ void processCommand (unsigned int cmd, unsigned int pos, int extra)
       Serial.write(6);
       for (int i = 0; i < 6; i++) {
         Serial.write(map(analogRead(i), 0, 1023, 0, 255));
-        delay(15);
+        delayMicroseconds(15000);
       }
     } else if (pos == 253) {    // Load configuration from Serial to EEPROM
       loadConfiguration(2);
@@ -355,7 +354,7 @@ void setPositionIsr()
       }
     }
   }
-
+  sei();
   // Turn on all the active channels
   x = 0;  // PortD
   y = 0;  // PortB
@@ -488,16 +487,22 @@ void setup()
   Timer1.attachInterrupt( setPositionIsr ); // attach the service to control positions
 
 #ifdef USE_I2C_COMMUNICATION
-  Wire.begin();    // join i2c bus
-  Wire.beginTransmission(0x52);  // transmit to device 0x52
-  Wire.write (0xF0);
-  Wire.write (0x55);
-  Wire.endTransmission(); // stop transmitting
-  Wire.beginTransmission(0x52);  // transmit to device 0x52
-  Wire.write (0xFB);
-  Wire.write (0x00);
-  Wire.endTransmission();  // stop transmitting
-  delay(10);
+  int err;
+  Wire.begin(NUNCHUCK_DEVICE_ADDRESS);    // join i2c bus
+  do {
+    Wire.beginTransmission(NUNCHUCK_DEVICE_ADDRESS);  // transmit to device 0x52
+    Wire.write (0xF0);
+    Wire.write (0x55);
+    err = Wire.endTransmission(true); // stop transmitting
+    //Serial.print("Err:"); Serial.println(err, DEC);
+    delayMicroseconds(15000);
+    Wire.beginTransmission(NUNCHUCK_DEVICE_ADDRESS);  // transmit to device 0x52
+    Wire.write (0xFB);
+    Wire.write (0x00);
+    err |= Wire.endTransmission(true);  // stop transmitting
+    //Serial.print("Err:"); Serial.println(err, DEC);
+    delayMicroseconds(15000);
+  } while (err != 0);
 #endif
 
 }
@@ -521,7 +526,7 @@ void loop() {
     cmd = Serial.read();
     pos = Serial.read();
     // Process it
-    processCommand(cmd, pos, 0);
+    processCommand(cmd, pos);
   } else if (total_programs && program_offset && !step_tick) {
     step_tick = ticks_per_step;
     runProgramStep();
@@ -535,20 +540,28 @@ uint8_t outbuf[NUNCHUCK_READ_LENGTH];    // array to store arduino output
 
 void processNunchuckKeys()
 {
+  int avail;
   if (cnt == 0) {
-    Wire.requestFrom(NUNCHUCK_DEVICE_ADDRESS, NUNCHUCK_READ_LENGTH, true); // request data from nunchuck
-    while (Wire.available())
-    {
-      outbuf[cnt] = Wire.read();  // receive byte as an integer
-      cnt++;
-    }
-    delay(10);
     Wire.beginTransmission(NUNCHUCK_DEVICE_ADDRESS); // transmit to device 0x52
-    Wire.write (0x00);    // sends one byte
-    Wire.endTransmission(); // stop transmitting
-
+    Wire.write(0x00);    // sends one byte
+    Wire.endTransmission(false);
+    delayMicroseconds(20);
+    avail = Wire.requestFrom(NUNCHUCK_DEVICE_ADDRESS, NUNCHUCK_READ_LENGTH, true);
+    while (Wire.available() > 0 && cnt < avail) {
+      outbuf[cnt++] = Wire.read();
+    }
+    if (cnt != NUNCHUCK_READ_LENGTH || outbuf[0] != 131 || outbuf[1] != 133 || outbuf[2] != 133 || outbuf[3] != 133 || outbuf[4] > 248 || outbuf[5] > 248) {
+      /*for (int i = 0; i < NUNCHUCK_READ_LENGTH; ++i)
+        {
+        Serial.print((int)outbuf[i], DEC);
+        Serial.print(" ");
+        }
+        Serial.println();
+      */
+      return;
+    }
     // If we received the NUNCHUCK_READ_LENGTH bytes, check for key presses
-    if (cnt == NUNCHUCK_READ_LENGTH) // && outbuf[0] == 131 && outbuf[1] == 133 && outbuf[2] == 133 && outbuf[3] == 133)
+    if (cnt == NUNCHUCK_READ_LENGTH)
     {
       // Get key presses
       KEY_UP = ~outbuf[7] & 1;
@@ -561,25 +574,28 @@ void processNunchuckKeys()
       KEY_B = ~outbuf[7] & 64;
       KEY_X = ~outbuf[7] & 8;
       KEY_Y = ~outbuf[7] & 32;
-      KEY_L_SHOULDER = outbuf[4] & 128;
-      KEY_R_SHOULDER = outbuf[5] & 128;
+      KEY_L_SHOULDER = outbuf[4] & 248;
+      KEY_R_SHOULDER = outbuf[5] & 248;
 
+      /*if (KEY_UP || KEY_RIGHT || KEY_LEFT || KEY_DOWN || KEY_SELECT || KEY_START || KEY_A || KEY_B || KEY_X || KEY_Y || KEY_L_SHOULDER || KEY_R_SHOULDER) {
+        Serial.println((KEY_RIGHT)?"Right":(KEY_LEFT)?"Left":(KEY_DOWN)?"Down":(KEY_UP)?"Up":(KEY_SELECT)?"Select":(KEY_START)?"Start":(KEY_A)?"A":(KEY_B)?"B":(KEY_X)?"X":(KEY_Y)?"Y":(KEY_L_SHOULDER)?"L_SHOULDER":(KEY_R_SHOULDER)?"R_SHOULDER":"WHAT?");
+        }*/
       digitalWrite (13, KEY_UP || KEY_RIGHT || KEY_LEFT || KEY_DOWN || KEY_SELECT || KEY_START || KEY_A || KEY_B || KEY_X || KEY_Y || KEY_L_SHOULDER || KEY_R_SHOULDER); // sets the LED on
-      if (KEY_UP) processCommand(254, 2, 0);
-      if (KEY_DOWN) processCommand(254, 8, 0);
-      if (KEY_LEFT) processCommand(254, 4, 0);
-      if (KEY_RIGHT) processCommand(254, 6, 0);
-      if (KEY_START) processCommand(254, 5, 0);
-      if (KEY_SELECT) processCommand(254, 1, 0);
-      if (KEY_A) processCommand(254, 3, 0);
-      if (KEY_B) processCommand(254, 7, 0);
-      if (KEY_X) processCommand(254, 9, 0);
-      if (KEY_Y) processCommand(254, 10, 0);
-      if (KEY_L_SHOULDER) processCommand(254, 11, 0);
-      if (KEY_R_SHOULDER) processCommand(254, 12, 0);
+      if (KEY_UP) processCommand(254, 2);
+      if (KEY_DOWN) processCommand(254, 8);
+      if (KEY_LEFT) processCommand(254, 4);
+      if (KEY_RIGHT) processCommand(254, 6);
+      if (KEY_START) processCommand(254, 5);
+      if (KEY_SELECT) processCommand(254, 1);
+      if (KEY_A) processCommand(254, 3);
+      if (KEY_B) processCommand(254, 7);
+      if (KEY_X) processCommand(254, 9);
+      if (KEY_Y) processCommand(254, 10);
+      if (KEY_L_SHOULDER) processCommand(254, 11);
+      if (KEY_R_SHOULDER) processCommand(254, 12);
     }
   }
-  cnt = ++cnt % 1000;
+  cnt = ++cnt % 2000;
 }
 
 #endif    // USE_I2C_COMMUNICATION

@@ -1,6 +1,6 @@
-A255
-
-jump1
-A0
-
+jleft3		# If left is lighter, jump 3 lines
+W255s16 S255s16
+jump2		# Jump inconditionally to restart
+W0s16 S0s16
+sleep3		# Sleep for 3 seconds
 restart
