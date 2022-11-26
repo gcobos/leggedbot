@@ -218,7 +218,7 @@ class Programmer (Module, ParameterContainer):
                 step_code = {}
                 for channel, pos in enumerate(commands):
                     if not previous_commands:
-                        previous_commands = zip(*data)[-1]
+                        previous_commands = list(zip(*data))[-1]
                     previous_pos = previous_commands[channel]
                     if previous_pos is None and pos is None:
                         continue
@@ -414,7 +414,7 @@ class TestProgrammer (unittest.TestCase):
         #print("data", [int(i + 0.5) for i in ap.get_raw_data()[0]])
         while True:
             code = ap.get_raw_code()
-            if code or seed:
+            if code or ap._seed:
                 break
         for i, v in enumerate(code):
             print("Step:", i, v)

@@ -124,7 +124,7 @@ class RobotController (object):
 		self.refresh_code()
 
 	def code_cursor_moved (self, widget, event=None):
-		step = self._get_code_text()[0:self.code_buffer.props.cursor_position].count('\n')	
+		step = self._get_code_text()[0:self.code_buffer.props.cursor_position].count('\n')
 		self.set_step(step)
 
 	def load_clicked (self, widget):
@@ -247,7 +247,7 @@ class RobotController (object):
 		code=self.wtree.get_object("code")
 		iter1 = self.code_buffer.get_iter_at_line(step)
 		if step != self.step:
-			self.code_buffer.place_cursor(iter1)
+			#self.code_buffer.place_cursor(iter1)
 			self.step = step
 
 	def mode_changed (self, widget):
