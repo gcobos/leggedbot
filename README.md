@@ -11,12 +11,14 @@ The robot can be controlled from Bluetooth, as far as it shows to the arduino as
 ## Protocol ##
 Arduino digital pins from 2 to 13 can be used to drive servo motors. Each of those channels can be enabled or disabled, and also be configured to limit their movement range, and set as inverted or not if needed, so that commands to move them will always go from 0 to 255, without breaking the range limits. Each of the 12 channels has a name (letter), organized in a way that it reminds of a keyboard, so that servo positions in the robot make sense.
 
-```CHANNELS = [
+```
+CHANNELS = [
   'Q', 'W', 'E', 
   'A', 'S', 'D', 
   'R', 'T', 'Y', 
   'F', 'G', 'H'
-]```
+]
+```
 
 In order to move a channnel, for example, channel Q, we would write the command "Q255", and the servo will go to the 100% of the defined range. There is also the option to set the speed at which the servo should move (from 1 to 16). This can be specified in the command with "Q255s16". Internally, those commands will be packed to use only two bytes each.
 
@@ -39,11 +41,11 @@ restart
 ### CHANNEL MOVEMENT ###
 Internally, a command to move a channel (servo), consists of two bytes, one for speed (bits 7:4) and the number of channel (bits 3:0), and the second byte is entirely to define the channels desired position (0-255).
 
-_speed_ can go from 1 to 16, (or number of steps for the transition) define how many partitions there must be to reach the desired new position for every leg. For now, transitions are linear only.
+_speed_ can go from 1 to 16, (number of steps for the transition) and defines how many partitions there must be to reach the desired new position for every leg. For now, transitions are linear only.
 
-_channel_ can go from 1 to 12, so even specifying the maximum speed and highest channel, the biggest value in the first byte would be 251. This means that there is room for adding new types of commands.
+_channel_ can go from 1 to 12, (selects the channel to move). Even specifying the maximum speed and highest channel, the biggest value in the first byte would be 251. This means that there is room for adding new types of commands.
 
-Inside a program, internally, a single byte 255 is used to delimit each line (that should be executed at the same time).
+Inside a program, internally, a single byte 255 is used to delimit each line (all commands in the same line should start executing at the same time).
 
 ### MISC COMMANDS TYPE ###
 There are several types of commands that can be used in a program, and others that cannot be included in programs. I call them **MISC_COMMANDS**:
