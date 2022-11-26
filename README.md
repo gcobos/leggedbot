@@ -65,14 +65,14 @@ These commands control the execution in programs. It's as simple as program `0` 
 	* 1 = **run** program #1 (or **restart**, if I'm in program #1)
 	* 2 = ...
 
-### OTHER COMMNADS TYPE ###
-
-- 253 for branching and delay commands
-	* 253 + 1 + delay	= sleep for `delay` seconds (sleep N)
-	* 253 + 2 + offset	= jump by `offset` (jump offset)
-	* 253 + 3 + offset	= jump by `offset` if A0 > A1 (jleft offset)
-	* 253 + 4 + offset	= jump by `offset` if A1 > A0 (jright offset)
-	* 253 + 5 + offset	= jump by `offset` if random(100) >= 50 (jrand offset)
+### OTHER COMMANDS TYPE ###
+Some new commands for branching and delay, to allow more "intelligent" programs
+- 253 for other commands, followed by:
+	* 1 + delay	= sleep for `delay` seconds (`sleep`N)
+	* 2 + offset	= jump by `offset` (`jump`lines)
+	* 3 + offset	= jump by `offset` if A0 > A1 (`jleft` offset)
+	* 4 + offset	= jump by `offset` if A1 > A0 (`jright` offset)
+	* 5 + offset	= jump by `offset` if random(100) >= 50 (`jrand` offset)
 
 
 > **NOTE**: Commands starting by 252 are yet unused.
