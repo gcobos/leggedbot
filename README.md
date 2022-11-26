@@ -22,7 +22,7 @@ CHANNELS = [
 
 In order to move a channnel, for example, channel Q, we would write the command "Q255", and the servo will go to the 100% of the defined range. There is also the option to set the speed at which the servo should move (from 1 to 16). This can be specified in the command with "Q255s16". Internally, those commands will be packed to use only two bytes each.
 
-All commands given in a same line in a program, will start at the same time. Each command has to be separated by a espace. A typical program will lok like this:
+All commands given in a same line in a program, will start at the same time. Each command has to be separated by a space. A typical program will look like this:
 
 ```
 Q255s16 A0s16
@@ -48,7 +48,7 @@ _channel_ can go from 1 to 12, (selects the channel to move). Even specifying th
 Inside a program, internally, a single byte 255 is used to delimit each line (all commands in the same line should start executing at the same time).
 
 ### MISC COMMANDS TYPE ###
-There are several types of commands that can be used in a program, and others that cannot be included in programs. I call them **MISC_COMMANDS**:
+These commands are not meant, and cannot be included in programs, they use the same code as for line separation (255). I call them **MISC_COMMANDS**:
 
 - 255 to start a MISC command, followed by:
 	* 0   = Get current position of each active channel (servo motor last known position)
@@ -66,14 +66,13 @@ These commands control the execution in programs. It's as simple as program `0` 
 	* 2 = ...
 
 ### OTHER COMMANDS TYPE ###
-Some new commands for branching and delay, to allow more "intelligent" programs
-- 253 for other commands, followed by:
-	* 1 + delay	= sleep for `delay` seconds (`sleep`N)
-	* 2 + offset	= jump by `offset` (`jump`lines)
-	* 3 + offset	= jump by `offset` if A0 > A1 (`jleft` offset)
-	* 4 + offset	= jump by `offset` if A1 > A0 (`jright` offset)
-	* 5 + offset	= jump by `offset` if random(100) >= 50 (`jrand` offset)
-
+Some new commands for branching and delay, to allow more "intelligent" programs. The sub command uses 3 bits (7:5), and the rest is for the parameter, either to specify a delay, or a range of lines to jump to. The parameter `lines` can be positive or negative, and goes from -16 to 15.
+- 253 for **OTHER_COMMANDS**, followed by:
+	* 0 + **delay**	= sleep for a **delay** seconds (i.e. sleep10)
+	* 1 + lines	= **jump** by a number of lines (i.e. jump3 or jump-2)
+	* 2 + lines	= **jleft** will jump by a number of lines if sensor A0 > A1 (i.e. jleft4)
+	* 3 + lines	= **jright** will jump by a number of lines if sensor A1 > A0 (i.e. jright-3)
+	* 4 + lines	= **jrand** will jump by the number of lines, in a 50% of times (i.e. jrand3)
 
 > **NOTE**: Commands starting by 252 are yet unused.
 
