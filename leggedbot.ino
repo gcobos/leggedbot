@@ -226,7 +226,7 @@ void processCommand (unsigned int cmd, unsigned int pos)
     int subcmd = pos >> 5;
     pos = pos & 31;
     if (subcmd == 0) {             // Sleep for a number of seconds (sleep N)
-      delay(1000 * pos);
+      delay(1000 * (pos));
     } else if (subcmd == 1) {      // Jump by a number of lines (jump N, -16..15)
       moveProgramOffset(pos - 16);
     } else if (subcmd == 2) {      // Jump if A0 has bigger value than A1 (jleft N)
@@ -245,6 +245,8 @@ void processCommand (unsigned int cmd, unsigned int pos)
       if (random(100) >= 50) {
         moveProgramOffset(pos - 16);
       }
+    } else if (subcmd == 5) {      // Change robot's ticks per step (ticks N)
+      ticks_per_step = pos;
     }
     return;
   } else if (cmd == 254) {  // Program control command

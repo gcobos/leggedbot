@@ -136,6 +136,9 @@ class RobotProgram(object):
 					elif j.startswith('jrand'):
 						pr = int(j[5:])
 						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 4, pr)
+					elif j.startswith('ticks'):
+						pr = int(j[5:])
+						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 5, pr)
 					elif j.startswith('stop'):
 						self.set_command(program, step, RobotProgram.CONTROL_COMMAND, 0)
 					elif j.startswith('run'):
@@ -194,6 +197,8 @@ class RobotProgram(object):
 					src = 'jright{:d}'.format(command.get('e', 0))	
 				elif command.get('v', 0)==4:
 					src = 'jrand{:d}'.format(command.get('e', 0))
+				elif command.get('v', 0)==5:
+					src = 'ticks{:d}'.format(command.get('e', 0))
 				else:
 					raise ValueError("Unknown command "+str(
 						(cmdnum, command.get('v', 0), command.get('e', 0))

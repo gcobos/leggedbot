@@ -73,6 +73,7 @@ Some new commands for branching and delay, to allow more "intelligent" programs.
 	* 2 + lines	= **jleft** will jump by a number of lines if sensor A0 > A1 (i.e. jleft4)
 	* 3 + lines	= **jright** will jump by a number of lines if sensor A1 > A0 (i.e. jright-3)
 	* 4 + lines	= **jrand** will jump by the number of lines, in a 50% of times (i.e. jrand3)
+	* 5 + **ticks**	= **ticks** changes the overall program execution speed (i.e. ticks4)
 
 > **NOTE**: Commands starting by 252 are yet unused.
 
