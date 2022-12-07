@@ -225,28 +225,30 @@ void processCommand (unsigned int cmd, unsigned int pos)
   if (cmd == 253) {             // Jump, branching and delay commands
     int subcmd = pos >> 5;
     pos = pos & 31;
-    if (subcmd == 0) {             // Sleep for a number of seconds (sleep N)
-      delay(1000 * (pos));
+    if (subcmd == 0) {             // Sleep for a number of seconds (sleep 1..32)
+      for (int i= 0; i < 1000 * (pos+1); i++) {
+        delayMicroseconds(1000);
+      }
     } else if (subcmd == 1) {      // Jump by a number of lines (jump N, -16..15)
       moveProgramOffset(pos - 16);
-    } else if (subcmd == 2) {      // Jump if A0 has bigger value than A1 (jleft N)
+    } else if (subcmd == 2) {      // Jump if A0 has bigger value than A1 (jleft -16..15)
       int tmp = analogRead(0);
       delayMicroseconds(15000);
       if (tmp > analogRead(1)) {
         moveProgramOffset(pos - 16);
       }
-    } else if (subcmd == 3) {      // Jump if A1 has bigger value than A0 (jright N)
+    } else if (subcmd == 3) {      // Jump if A1 has bigger value than A0 (jright -16..15)
       int tmp = analogRead(1);
       delayMicroseconds(15000);
       if (tmp > analogRead(0)) {
         moveProgramOffset(pos - 16);
       }
-    } else if (subcmd == 4) {      // Jump randomly in a 50% probability (jrand N)
+    } else if (subcmd == 4) {      // Jump randomly in a 50% probability (jrand -16..15)
       if (random(100) >= 50) {
         moveProgramOffset(pos - 16);
       }
-    } else if (subcmd == 5) {      // Change robot's ticks per step (ticks N)
-      ticks_per_step = pos;
+    } else if (subcmd == 5) {      // Change robot's ticks per step (ticks 1..32)
+      ticks_per_step = pos+1;
     }
     return;
   } else if (cmd == 254) {  // Program control command
@@ -581,7 +583,7 @@ void processNunchuckKeys()
 
       /*if (KEY_UP || KEY_RIGHT || KEY_LEFT || KEY_DOWN || KEY_SELECT || KEY_START || KEY_A || KEY_B || KEY_X || KEY_Y || KEY_L_SHOULDER || KEY_R_SHOULDER) {
         Serial.println((KEY_RIGHT)?"Right":(KEY_LEFT)?"Left":(KEY_DOWN)?"Down":(KEY_UP)?"Up":(KEY_SELECT)?"Select":(KEY_START)?"Start":(KEY_A)?"A":(KEY_B)?"B":(KEY_X)?"X":(KEY_Y)?"Y":(KEY_L_SHOULDER)?"L_SHOULDER":(KEY_R_SHOULDER)?"R_SHOULDER":"WHAT?");
-        }*/
+      }*/
       digitalWrite (13, KEY_UP || KEY_RIGHT || KEY_LEFT || KEY_DOWN || KEY_SELECT || KEY_START || KEY_A || KEY_B || KEY_X || KEY_Y || KEY_L_SHOULDER || KEY_R_SHOULDER); // sets the LED on
       if (KEY_UP) processCommand(254, 2);
       if (KEY_DOWN) processCommand(254, 8);

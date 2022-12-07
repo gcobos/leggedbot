@@ -123,7 +123,7 @@ class RobotProgram(object):
 				for j in channels_str.split():
 					if j.startswith('sleep'):
 						pr = int(j[5:])
-						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 0, pr)
+						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 0, pr-1)
 					elif j.startswith('jump'):
 						pr = int(j[4:])
 						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 1, pr)
@@ -138,7 +138,7 @@ class RobotProgram(object):
 						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 4, pr)
 					elif j.startswith('ticks'):
 						pr = int(j[5:])
-						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 5, pr)
+						self.set_command(program, step, RobotProgram.OTHER_COMMAND, 5, pr-1)
 					elif j.startswith('stop'):
 						self.set_command(program, step, RobotProgram.CONTROL_COMMAND, 0)
 					elif j.startswith('run'):
