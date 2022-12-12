@@ -197,12 +197,14 @@ class RobotController (object):
 			self.refresh_code()
 
 	def min_range_changed (self, widget):
-		channel_name = self._get_name(widget, prefix='min_range')
+		channel_name = self._get_name(widget, prefix='min_range')		
 		self.robot.setup_channel(channel_name, min_range = int(widget.get_value()))
+		self._update_range_width(channel_name)
 
 	def max_range_changed (self, widget):
 		channel_name = self._get_name(widget, prefix='max_range')
 		self.robot.setup_channel(channel_name, max_range = int(widget.get_value()))
+		self._update_range_width(channel_name)
 
 	def inverted_toggled (self, widget):
 		channel_name = self._get_name(widget, prefix='inverted')
@@ -286,6 +288,16 @@ class RobotController (object):
 
 	def _get_name(self, obj, prefix=''):
 		return Gtk.Buildable.get_name(obj).replace(prefix + "_", "").upper()
+
+	def _update_range_width (self, channel):
+		channel = channel.lower()
+		minimum = self.wtree.get_object("min_range_%s" % channel).get_value()
+		maximum = self.wtree.get_object("max_range_%s" % channel).get_value()
+		channel_range = int(1 + maximum - minimum)
+		if channel_range < 0:
+			channel_range = "ERR"
+		self.wtree.get_object('channel_range_width_%s' % channel).set_text(str(channel_range))
+		return 
 
 if __name__ == "__main__":
 
