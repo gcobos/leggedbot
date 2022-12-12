@@ -550,18 +550,12 @@ void processNunchuckKeys()
     Wire.write(0x00);    // sends one byte
     Wire.endTransmission(false);
     delayMicroseconds(20);
-    avail = Wire.requestFrom(NUNCHUCK_DEVICE_ADDRESS, NUNCHUCK_READ_LENGTH, true);
+    avail = Wire.requestFrom(NUNCHUCK_DEVICE_ADDRESS, NUNCHUCK_READ_LENGTH, false);
     while (Wire.available() > 0 && cnt < avail) {
       outbuf[cnt++] = Wire.read();
     }
+    // Validity check for the data packet received
     if (cnt != NUNCHUCK_READ_LENGTH || outbuf[0] != 131 || outbuf[1] != 133 || outbuf[2] != 133 || outbuf[3] != 133 || outbuf[4] > 248 || outbuf[5] > 248) {
-      /*for (int i = 0; i < NUNCHUCK_READ_LENGTH; ++i)
-        {
-        Serial.print((int)outbuf[i], DEC);
-        Serial.print(" ");
-        }
-        Serial.println();
-      */
       return;
     }
     // If we received the NUNCHUCK_READ_LENGTH bytes, check for key presses
@@ -581,9 +575,6 @@ void processNunchuckKeys()
       KEY_L_SHOULDER = outbuf[4] & 248;
       KEY_R_SHOULDER = outbuf[5] & 248;
 
-      /*if (KEY_UP || KEY_RIGHT || KEY_LEFT || KEY_DOWN || KEY_SELECT || KEY_START || KEY_A || KEY_B || KEY_X || KEY_Y || KEY_L_SHOULDER || KEY_R_SHOULDER) {
-        Serial.println((KEY_RIGHT)?"Right":(KEY_LEFT)?"Left":(KEY_DOWN)?"Down":(KEY_UP)?"Up":(KEY_SELECT)?"Select":(KEY_START)?"Start":(KEY_A)?"A":(KEY_B)?"B":(KEY_X)?"X":(KEY_Y)?"Y":(KEY_L_SHOULDER)?"L_SHOULDER":(KEY_R_SHOULDER)?"R_SHOULDER":"WHAT?");
-      }*/
       digitalWrite (13, KEY_UP || KEY_RIGHT || KEY_LEFT || KEY_DOWN || KEY_SELECT || KEY_START || KEY_A || KEY_B || KEY_X || KEY_Y || KEY_L_SHOULDER || KEY_R_SHOULDER); // sets the LED on
       if (KEY_UP) processCommand(254, 2);
       if (KEY_DOWN) processCommand(254, 8);
@@ -599,7 +590,7 @@ void processNunchuckKeys()
       if (KEY_R_SHOULDER) processCommand(254, 12);
     }
   }
-  cnt = ++cnt % 2000;
+  cnt = ++cnt % 6000;
 }
 
 #endif    // USE_I2C_COMMUNICATION
