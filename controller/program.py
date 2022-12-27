@@ -188,7 +188,7 @@ class RobotProgram(object):
 			# print("Channel?", channel, "Command?", command, "Command num?", cmdnum)
 			if cmdnum == RobotProgram.OTHER_COMMAND:
 				if command.get('v', 0)==0:
-					src = 'sleep{:d}'.format(command.get('e', 0))	
+					src = 'sleep{:d}'.format(1+command.get('e', 0))
 				elif command.get('v', 0)==1:
 					src = 'jump{:d}'.format(command.get('e', 0))	
 				elif command.get('v', 0)==2:
@@ -198,7 +198,7 @@ class RobotProgram(object):
 				elif command.get('v', 0)==4:
 					src = 'jrand{:d}'.format(command.get('e', 0))
 				elif command.get('v', 0)==5:
-					src = 'ticks{:d}'.format(command.get('e', 0))
+					src = 'ticks{:d}'.format(1+command.get('e', 0))
 				else:
 					raise ValueError("Unknown command "+str(
 						(cmdnum, command.get('v', 0), command.get('e', 0))
